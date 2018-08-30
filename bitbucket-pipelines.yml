@@ -4,7 +4,7 @@ pipelines:
     - step:
         script:
           - apt-get update && apt-get install -qy git curl libmcrypt-dev mysql-client
-          - yes | pecl install mcrypt-1.0.1 unzip
+          - yes | pecl install mcrypt-1.0.1 zip unzip
           - docker-php-ext-install pdo_mysql
           # - bash ./install-composer.sh
           - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -25,8 +25,7 @@ pipelines:
         # trigger: manual  # uncomment to have a manual step
         script:
           - apt-get update && apt-get install -qy git curl libmcrypt-dev mysql-client
-          # - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD
-          - git push https://heroku:5b271f58-d3a9-44f3-8202-a49d5a8a8330@git.heroku.com/shopify-orabi.git HEAD
+          - git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD
 
 
 definitions:
