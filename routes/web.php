@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::prefix('admin')->name('admin.')->group(function () {
+    require_once __DIR__ . '/admin.php';
 });
+
+
+Route::prefix('vendor')->name('vendor.')->middleware('verified', 'auth', 'isVendorAdmin')->group(function () {
+    require_once __DIR__ . '/vendor.php';
+});
+
+
+if (request()->segment('1') != 'admin') {
+    require_once __DIR__ . '/front.php';
+}

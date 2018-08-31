@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Admin\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends Controller
+class Login extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/vendor';
+    protected $redirectTo = '/admin';
 
     /**
      * Create a new controller instance.
@@ -34,7 +34,17 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:web')->except('logout');
+        $this->middleware('guest:web-admin')->except('logout');
+    }
+
+     /**
+     * Get the guard to be used during authentication.
+     *
+     * @return \Illuminate\Contracts\Auth\StatefulGuard
+     */
+    protected function guard()
+    {
+        return auth('web-admin');
     }
 
     /**
@@ -44,6 +54,6 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('front.auth.login');
+        return view('admin.auth.login');
     }
 }
