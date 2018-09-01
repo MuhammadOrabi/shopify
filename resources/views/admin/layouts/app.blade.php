@@ -1,51 +1,63 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-</head>
-<body class="bg-teal-lightest h-screen antialiased">
-    <div id="app">
-        <nav class="bg-white h-12 shadow mb-8 px-6 md:px-0">
-            <div class="container mx-auto h-full">
-                <div class="flex items-center justify-center h-12">
-                    <div class="mr-6">
-                        <a href="{{ url('/') }}" class="text-lg font-hairline text-teal-darker no-underline hover:underline">
-                            {{ config('app.name', 'Laravel') }}
-                        </a>
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    </head>
+    <body>
+        <div id="app">
+            <nav class="navbar has-shadow">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a href="{{ url('/') }}" class="navbar-item">{{ config('app.name', 'Laravel') }}</a>
+
+                        <div class="navbar-burger burger" data-target="navMenu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
                     </div>
-                    <div class="flex-1 text-right">
-                        @guest('web-admin')
-                            <a class="no-underline hover:underline text-teal-darker pr-3 text-sm" href="{{ url('/admin/login') }}">Login</a>
-                        @else
-                            <span class="text-teal-darker text-sm pr-4">{{ Auth::user()->name }}</span>
 
-                            <a href="{{ route('admin.logout') }}"
-                                class="no-underline hover:underline text-teal-darker text-sm"
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">Logout</a>
-                            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="hidden">
-                                {{ csrf_field() }}
-                            </form>
-                        @endguest
+                    <div class="navbar-menu" id="navMenu">
+                        <div class="navbar-start"></div>
+
+                        <div class="navbar-end">
+                            @if (auth('web-admin')->guest())
+                                <a class="navbar-item " href="{{ route('admin.login') }}">Login</a>
+                            @else
+                                <div class="navbar-item has-dropdown is-hoverable">
+                                    <a class="navbar-link" href="#">{{ auth('web-admin')->user()->name }}</a>
+
+                                    <div class="navbar-dropdown">
+                                        <a class="navbar-item" href="{{ route('admin.logout') }}"
+                                           onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                                              style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+            @yield('content')
+        </div>
 
-        @yield('content')
-    </div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-</body>
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}"></script>
+    </body>
 </html>

@@ -1,24 +1,23 @@
 @extends('front.layouts.app')
 
 @section('content')
-<div class="flex items-center">
-    <div class="md:w-1/2 md:mx-auto">
-        <div class="rounded shadow">
-            <div class="font-medium text-lg text-teal-darker bg-teal p-3 rounded-t">
-                Front Page
-            </div>
-            <div class="bg-white p-3 rounded-b">
-                @if (session('status'))
-                    <div class="bg-green-lightest border border-green-light text-green-dark text-sm px-4 py-3 rounded mb-4">
+    <div class="container">
+        <div class="columns is- is-marginless is-centered">
+            <div class="column is-7">
+                <nav class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            Home Page
+                        </p>
+                    </header>
+                    @if (session('status'))
                         {{ session('status') }}
+                    @endif
+                    <div class="card-content">
+                        Welcome to our Shop!
                     </div>
-                @endif
-
-                <p class="text-grey-dark">
-                   This is the welcome page
-                </p>
+                </nav>
             </div>
         </div>
     </div>
-</div>
 @endsection

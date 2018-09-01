@@ -1,8 +1,5 @@
 let mix = require("laravel-mix");
 
-require("laravel-mix-tailwind");
-require("laravel-mix-purgecss");
-
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -14,11 +11,5 @@ require("laravel-mix-purgecss");
  |
  */
 
-mix.js("resources/js/app.js", "public/js")
-   .postCss("resources/css/app.css", "public/css")
-   .tailwind()
-   .purgeCss();
-
-if (mix.inProduction()) {
-  mix.version();
-}
+mix.js('resources/js/app.js', 'public/js')
+   .sass('resources/sass/app.scss', 'public/css');
