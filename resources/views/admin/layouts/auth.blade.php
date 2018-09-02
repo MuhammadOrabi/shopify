@@ -15,13 +15,7 @@
     </head>
     <body>
         <div id="app">
-            @include('admin.partials.nav')
-            @include('admin.partials.aside')
-            <div class="managment-area">
-                <div class="flex-container">
-                    @yield('content')
-                </div>
-            </div>
+            @yield('content')
         </div>
 
         <!-- Scripts -->

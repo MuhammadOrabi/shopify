@@ -10,6 +10,8 @@ Route::middleware('auth:web-admin')->group(function () {
     });
 
     Route::post('/logout', 'Admin\Auth\Login@logout')->name('logout');
+
+    Route::resource('admins', 'Admin\Admins');
 });
 
 Route::get('/login', 'Admin\Auth\Login@showLoginForm')->name('login');
