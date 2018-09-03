@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Models\Admin;
+use App\Models\Role;
+use Illuminate\Database\Seeder;
 
 class AdminUsers extends Seeder
 {
@@ -12,10 +13,12 @@ class AdminUsers extends Seeder
      */
     public function run()
     {
-        Admin::create([
+        $admin = Admin::updateOrCreate([
             'name' => 'Admin',
-            'email' => 'admin@app.com',
-            'password' => Hash::make('password'),
-        ]);
+            'email' => 'admin@app.com'
+        ], ['password' => Hash::make('password')]);
+
+        $adminsRoles = Role::where('category', 'Admins')->pluck('id')->toArray();
+        $admin->roles()->syncWithoutDetaching($adminsRoles);
     }
 }

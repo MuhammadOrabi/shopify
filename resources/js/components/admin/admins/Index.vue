@@ -21,7 +21,7 @@
                 </b-table-column>
 
                 <b-table-column label="Options">
-                    <a :href="`${siteUrl}/${props.row.id}/edit`" class="button is-info">Update</a>
+                    <a :href="`${siteUrl}/admin/admins/${props.row.id}/edit`" class="button is-info">Update</a>
                     <button class="button is-danger" @click="confirmCustomDelete(props.row.id)">
                         Delete Admin
                     </button>
@@ -37,7 +37,7 @@
 
 <script>
     export default {
-        props: ['admins', 'siteUrl'],
+        props: ['admins', 'siteUrl', 'accessToken'],
         computed: {
             data() {
                 return JSON.parse(this.admins);
@@ -60,6 +60,10 @@
                 });
             },
             deleteUser(id) {
+                window.axios.delete(`${this.siteUrl}/api/admin/admins/${id}`, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
+                    .then(res => {
+                        console.log(res);
+                    }).catch(err => console.log(err));
                 this.$toast.open('Account deleted! ' . id);
             }
         }
