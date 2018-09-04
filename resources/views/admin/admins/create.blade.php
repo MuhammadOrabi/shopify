@@ -10,12 +10,12 @@
                         <span class="icon"><i class="fa fa-fw p-r-10 fa-arrow-left"></i></span>Back
                     </a>
                 </header>
-                <div class="card-content">
-                    <admin-admins-index
-                        roles="{{ json_encode() }}"
+                <div class="card-content" >
+                    <admin-admins-form
+                        roles="{{ json_encode($roles->toArray()) }}"
                         site-url="{{ url('/') }}"
                         access-token="{{ auth('web-admin')->user()->createToken('Token')->accessToken }}"
-                        ></admin-admins-index>
+                        ></admin-admins-form>
                 </div>
             </nav>
         </div>

@@ -22,6 +22,7 @@ Vue.use(Buefy)
  */
 
 Vue.component('admin-admins-index', require('./components/admin/admins/Index.vue'));
+Vue.component('admin-admins-form', require('./components/admin/admins/Form.vue'));
 
 const app = new Vue({
     el: '#app'

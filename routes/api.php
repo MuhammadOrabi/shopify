@@ -12,8 +12,7 @@
 */
 Route::middleware('auth:api-admin')->prefix('admin')->group(function () {
     Route::apiResources([
-        'admins' => 'API\Admin\Admins'
+        'admins' => 'API\Admin\AdminsController'
     ]);
 });
 
-// Route::apiResources([])->middleware('api');

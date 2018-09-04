@@ -38,15 +38,14 @@
 <script>
     export default {
         props: ['admins', 'siteUrl', 'accessToken'],
-        computed: {
-            data() {
-                return JSON.parse(this.admins);
-            }
-        },
         data() {
             return {
                 checkedRows: [],
+                data: []
             }
+        },
+        mounted() {
+            this.data = JSON.parse(this.admins);
         },
         methods: {
             confirmCustomDelete(id) {
@@ -62,9 +61,12 @@
             deleteUser(id) {
                 window.axios.delete(`${this.siteUrl}/api/admin/admins/${id}`, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
                     .then(res => {
-                        console.log(res);
+                        this.data = window._.reject(this.data, admin => {
+                            return admin.id == id;
+                        });
+                        this.checkedRows = [];
+                        this.$toast.open('Admin deleted!');
                     }).catch(err => console.log(err));
-                this.$toast.open('Account deleted! ' . id);
             }
         }
     }

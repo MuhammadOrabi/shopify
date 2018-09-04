@@ -48,8 +48,10 @@ class Admin extends Authenticatable
         return $this->belongsToMany('App\Models\Role');
     }
 
-    public function checkRole($cat, $slug)
+    public function getRole($model, $slug)
     {
-        return $this->roles()->whereCategory($cat)->whereSlug($slug)->first();
+        return $this->roles()->whereHas('permissions', function ($query) use ($model, $slug) {
+            $query->where('model', $model)->where('slug', $slug);
+        })->get()->first();
     }
 }

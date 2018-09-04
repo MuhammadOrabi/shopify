@@ -18,7 +18,7 @@ class AdminUsers extends Seeder
             'email' => 'admin@app.com'
         ], ['password' => Hash::make('password')]);
 
-        $adminsRoles = Role::where('category', 'Admins')->pluck('id')->toArray();
-        $admin->roles()->syncWithoutDetaching($adminsRoles);
+        $adminsRoles = Role::where('slug', 'super-admin')->pluck('id')->toArray();
+        $admin->roles()->sync($adminsRoles);
     }
 }
