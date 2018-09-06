@@ -54,6 +54,7 @@ class AdminsController extends Controller
     public function show(Admin $admin)
     {
         $this->authorize('view', Admin::class);
+        return view('admin.admins.view', compact('admin'));
     }
 
     /**
@@ -65,7 +66,9 @@ class AdminsController extends Controller
     public function edit(Admin $admin)
     {
         $this->authorize('update', Admin::class);
-
+        $roles = Role::with('permissions')->get();
+        $admin->load('roles');
+        return view('admin.admins.update', compact('admin', 'roles'));
     }
 
     /**

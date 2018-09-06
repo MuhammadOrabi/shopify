@@ -15,11 +15,13 @@
         </ul>
         <p class="menu-label">Administration</p>
         <ul class="menu-list">
-            <li>
-                <a href="{{ url('/admin/admins') }}" class="">
-                    <span class="icon"><i class="fa fa-fw m-r-10 fa-gear"></i></span>Admins
-                </a>
-            </li>
+            @can('view', 'App\Models\Admin')
+                <li>
+                    <a href="{{ url('/admin/admins') }}" class="">
+                        <span class="icon"><i class="fa fa-fw m-r-10 fa-gear"></i></span>Admins
+                    </a>
+                </li>
+            @endcan
             <li>
                 <a class="has-submenu" href="#">
                     <span class="icon"><i class="fa fa-fw m-r-10 fa-list"></i></span>Vendor Users

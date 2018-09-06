@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\API\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AdminsController extends Controller
 {
@@ -29,15 +30,18 @@ class AdminsController extends Controller
         $this->authorize('create', Admin::class);
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:admins',
             'password' => 'required|string|min:6|confirmed',
+            'role' => 'required|exists:roles,id',
         ]);
         $admin = Admin::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-        return response()->json($admin);
+        $admin->roles()->sync($request->role);
+        $message = __('admin.created');
+        return response()->json(['message' => $message]);
     }
 
     /**
@@ -60,7 +64,21 @@ class AdminsController extends Controller
      */
     public function update(Request $request, Admin $admin)
     {
-        //
+        $this->authorize('update', Admin::class);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|exists:admins',
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'required|exists:roles,id',
+        ]);
+        $admin->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+        $admin->roles()->sync($request->role);
+        $message = __('admin.updated');
+        return response()->json(['message' => $message]);
     }
 
     /**

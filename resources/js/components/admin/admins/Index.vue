@@ -21,7 +21,12 @@
                 </b-table-column>
 
                 <b-table-column label="Options">
-                    <a :href="`${siteUrl}/admin/admins/${props.row.id}/edit`" class="button is-info">Update</a>
+                    <a :href="`${siteUrl}/admin/admins/${props.row.id}/edit`" class="button is-info">
+                        <b-icon
+                            pack="fas"
+                            icon="prof">
+                        </b-icon>
+                    </a>
                     <button class="button is-danger" @click="confirmCustomDelete(props.row.id)">
                         Delete Admin
                     </button>
@@ -60,13 +65,13 @@
             },
             deleteUser(id) {
                 window.axios.delete(`${this.siteUrl}/api/admin/admins/${id}`, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
-                    .then(res => {
-                        this.data = window._.reject(this.data, admin => {
-                            return admin.id == id;
-                        });
-                        this.checkedRows = [];
-                        this.$toast.open('Admin deleted!');
-                    }).catch(err => console.log(err));
+                .then(res => {
+                    this.data = window._.reject(this.data, admin => {
+                        return admin.id == id;
+                    });
+                    this.checkedRows = [];
+                    this.$toast.open('Admin deleted!');
+                }).catch(err => console.log(err));
             }
         }
     }
