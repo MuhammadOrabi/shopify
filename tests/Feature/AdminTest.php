@@ -3,14 +3,12 @@
 namespace Tests\Feature;
 
 use App\Models\Admin;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AdminTest extends TestCase
 {
-    use DatabaseMigrations;
     /**
      * A basic test example.
      *
@@ -18,7 +16,7 @@ class AdminTest extends TestCase
      */
     public function testIndexAdmin()
     {
-        $admin = factory(Admin::class)->create();
+        $admin = Admin::find(1);
         $response = $this->actingAs($admin, 'web-admin')->get('/admin/admins');
         $response->assertOk();
     }
