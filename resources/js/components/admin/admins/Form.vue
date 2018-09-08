@@ -34,10 +34,8 @@
                 </option>
             </b-select>
         </b-field>
-        <button class="button is-success is-centered" @click="save" :disabled="check">
-            <span class="icon is-small">
-                <i class="fa fa-check"></i>
-            </span>
+        <button class="button is-success is-centered" @click="save" >
+            <span class="icon" ><font-awesome-icon icon="check" size="xs" fixed-width/></span>
             <span>Save</span>
         </button>
     </section>
@@ -53,15 +51,6 @@
                 form: {},
                 errors: {},
                 loading: false
-            }
-        },
-        computed: {
-            check() {
-                if (!this.form.name || !this.form.email || !this.form.password || !this.form.password_confirmation || !this.form.role) {
-                    return true;
-                } else {
-                    return false;
-                }
             }
         },
         mounted() {

@@ -4,7 +4,8 @@
     <h1 class="subtitle"> > List Admins</h1>
     <hr>
     <a href="{{ url('/admin/admins/create') }}" class="button is-success">
-        <span class="icon"><i class="fa fa-fw p-r-10 fa-plus"></i></span>Create
+        <span class="icon" ><font-awesome-icon class="m-r-10" icon="user-plus" size="xs" fixed-width/></span>
+        Create
     </a>
     <admin-admins-index
         admins="{{ json_encode($admins->toArray()) }}"

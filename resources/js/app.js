@@ -9,11 +9,15 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+require('./fontawesome');
+
 // Buefy
 import Buefy from 'buefy'
 import 'buefy/lib/buefy.css'
 
 Vue.use(Buefy)
+
+// Vue.config.productionTip = false
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -23,6 +27,9 @@ Vue.use(Buefy)
 
 Vue.component('admin-admins-index', require('./components/admin/admins/Index.vue'));
 Vue.component('admin-admins-form', require('./components/admin/admins/Form.vue'));
+
+Vue.component('admin-categories-index', require('./components/admin/categories/Index.vue'));
+Vue.component('admin-categories-form', require('./components/admin/categories/Form.vue'));
 
 const app = new Vue({
     el: '#app'

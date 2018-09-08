@@ -67,15 +67,22 @@ class AdminsController extends Controller
         $this->authorize('update', Admin::class);
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|exists:admins',
-            'password' => 'required|string|min:6|confirmed',
+            'email' => 'required|string|email|max:255',
+            'password' => 'string|min:6|confirmed',
             'role' => 'required|exists:roles,id',
         ]);
+
         $admin->update([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
         ]);
+
+        if ($request->password) {
+            $admin->update([
+                'password' => Hash::make($request->password)
+            ]);
+        }
+
         $admin->roles()->sync($request->role);
         $message = __('admin.updated');
         return response()->json(['message' => $message]);

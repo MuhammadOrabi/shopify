@@ -1,11 +1,18 @@
-@import "node_modules/font-awesome/scss/font-awesome";
+// @import "node_modules/font-awesome/scss/font-awesome";
+@import url(//cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css);
 
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
 // Variables
+
 @import "bulma";
 
-@import "_sidebar";
+@import "variables";
 
-@import "_helpers";
+@import "sidebar";
+
+@import "helpers";
+
+@import "overrides";
+

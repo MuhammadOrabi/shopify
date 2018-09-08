@@ -21,10 +21,10 @@
                 </b-table-column>
 
                 <b-table-column label="Options">
-                    <a :href="`${siteUrl}/admin/admins/${props.row.id}`" class="button is-info is-inverted is-rounded">
+                    <a :href="`${siteUrl}/admin/categories/${props.row.id}`" class="button is-info is-inverted is-rounded">
                         <font-awesome-icon icon="eye" fixed-width size="lg"/>
                     </a>
-                    <a :href="`${siteUrl}/admin/admins/${props.row.id}/edit`" class="button is-primary is-inverted is-rounded">
+                    <a :href="`${siteUrl}/admin/categories/${props.row.id}/edit`" class="button is-primary is-inverted is-rounded">
                         <font-awesome-icon icon="edit" fixed-width size="lg"/>
                     </a>
                     <button class="button is-danger is-inverted is-rounded" @click="confirmCustomDelete(props.row.id)">
@@ -42,7 +42,7 @@
 
 <script>
     export default {
-        props: ['admins', 'siteUrl', 'accessToken'],
+        props: ['categories', 'siteUrl', 'accessToken'],
         data() {
             return {
                 checkedRows: [],
@@ -50,7 +50,7 @@
             }
         },
         mounted() {
-            this.data = JSON.parse(this.admins);
+            this.data = JSON.parse(this.categories);
         },
         methods: {
             confirmCustomDelete(id) {
@@ -64,7 +64,7 @@
                 });
             },
             deleteUser(id) {
-                window.axios.delete(`${this.siteUrl}/api/admin/admins/${id}`, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
+                window.axios.delete(`${this.siteUrl}/api/admin/categories/${id}`, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
                 .then(res => {
                     this.data = window._.reject(this.data, admin => {
                         return admin.id == id;

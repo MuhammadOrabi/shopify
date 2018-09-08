@@ -25,6 +25,11 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.4",
+        "@fortawesome/free-solid-svg-icons": "^5.3.1",
+        "@fortawesome/vue-fontawesome": "^0.1.1",
+        "i": "^0.3.6",
+        "npm": "^6.4.1",
         "underscore": "^1.9.1"
     }
 }

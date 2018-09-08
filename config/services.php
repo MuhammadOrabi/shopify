@@ -34,5 +34,15 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+    // if (!isset($config['project_id'], $config['client_id'], $config['client_email'], $config['private_key'])) {
 
+    'firebase' => [
+        'project_id' => env('FIREBASE_PROJECT_ID'),
+        'client_id' => env('FIREBASE_CLIENT_ID'),
+        'api_key' => env('FIREBASE_API_KEY'), // Only used for JS integration
+        'auth_domain' => env('FIREBASE_AUTH_DOMAIN'), // Only used for JS integration
+        'database_url' => env('FIREBASE_DATABASE_URL'),
+        'secret' => env('FIREBASE_DATABASE_SECRET'),
+        'storage_bucket' => env('FIREBASE_STORAGE_BUCKET'), // Only used for JS integration
+    ]
 ];

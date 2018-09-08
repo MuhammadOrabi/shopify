@@ -5,18 +5,18 @@
         <div class="">
             <nav class="card">
                 <header class="card-header">
-                   <h1 class="subtitle card-header-title"> > Create Admin</h1>
-                    <a href="{{ url('/admin/admins') }}" class="button is-primary">
+                   <h1 class="subtitle card-header-title"> > Create Category</h1>
+                    <a href="{{ url('/admin/categories') }}" class="button is-primary">
                         <span class="icon" ><font-awesome-icon class="m-r-10" icon="arrow-left" size="xs" fixed-width/></span>
                         Back
                     </a>
                 </header>
                 <div class="card-content" >
-                    <admin-admins-form
-                        roles="{{ json_encode($roles->toArray()) }}"
+                    <admin-categories-form
+                        tags="{{ json_encode($tags->toArray()) }}"
                         site-url="{{ url('/') }}"
                         access-token="{{ auth('web-admin')->user()->createToken('Token')->accessToken }}"
-                        ></admin-admins-form>
+                        ></admin-categories-form>
                 </div>
             </nav>
         </div>
