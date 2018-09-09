@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Category;
+use App\Traits\Firebase;
+use Illuminate\Http\Request;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
-use App\Traits\Firebase;
 
 class CategoriesController extends Controller
 {
@@ -94,8 +95,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $this->authorize('delete', Admin::class);
+        $category->delete();
+        return response()->json();
     }
 }

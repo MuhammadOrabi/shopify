@@ -120,7 +120,7 @@
                 })
                 .then(res => {
                     this.loading = false;
-                    // this.form = {};
+                    this.form = {};
                     this.$toast.open({
                         message: res.data.message,
                         type: 'is-success'

@@ -6,12 +6,12 @@
                     {{ props.row.id }}
                 </b-table-column>
 
-                <b-table-column field="name" label="Name" sortable>
-                    {{ props.row.name }}
+                <b-table-column field="title" label="Title" sortable>
+                    {{ props.row.title }}
                 </b-table-column>
 
-                <b-table-column field="email" label="Email" sortable>
-                    {{ props.row.email }}
+                <b-table-column field="slug" label="Slug" sortable>
+                    {{ props.row.slug }}
                 </b-table-column>
 
                 <b-table-column field="created_at" label="Created Date" sortable centered>
@@ -55,22 +55,22 @@
         methods: {
             confirmCustomDelete(id) {
                 this.$dialog.confirm({
-                    title: 'Deleting admin',
-                    message: 'Are you sure you want to <b>delete</b> this admin? This action cannot be undone.',
-                    confirmText: 'Delete Account',
+                    title: 'Deleting Category',
+                    message: 'Are you sure you want to <b>delete</b> this Cateory? This action cannot be undone.',
+                    confirmText: 'Delete Category',
                     type: 'is-danger',
                     hasIcon: true,
-                    onConfirm: () => this.deleteUser(id)
+                    onConfirm: () => this.deleteCategory(id)
                 });
             },
-            deleteUser(id) {
+            deleteCategory(id) {
                 window.axios.delete(`${this.siteUrl}/api/admin/categories/${id}`, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
                 .then(res => {
-                    this.data = window._.reject(this.data, admin => {
-                        return admin.id == id;
+                    this.data = window._.reject(this.data, category => {
+                        return category.id == id;
                     });
                     this.checkedRows = [];
-                    this.$toast.open('Admin deleted!');
+                    this.$toast.open('Category deleted!');
                 }).catch(err => console.log(err));
             }
         }
