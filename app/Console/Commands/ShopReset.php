@@ -38,8 +38,8 @@ class ShopReset extends Command
      */
     public function handle()
     {
-        Artisan::call('migrate:fresh');
-        Artisan::call('db:seed');
+        Artisan::call('migrate:fresh', ['--force' => true]);
+        Artisan::call('db:seed', ['--force' => true]);
         Artisan::call('passport:install', ['--force' => true]);
     }
 }
