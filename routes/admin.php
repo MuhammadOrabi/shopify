@@ -12,6 +12,7 @@ Route::middleware('auth:web-admin')->group(function () {
     Route::post('/logout', 'Admin\Auth\LoginController@logout')->name('logout');
 
     Route::resource('admins', 'Admin\AdminsController');
+
     Route::resource('categories', 'Admin\CategoriesController');
 });
 

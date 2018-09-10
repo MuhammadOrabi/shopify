@@ -4,13 +4,13 @@
         <ul class="menu-list">
             <li>
                 <a href="{{ url('/admin/dashboard') }}" class="{{ Nav::hasSegment('dashboard', 2) }}">
-                    <span class="icon"><font-awesome-icon class="p-t-5" icon="tachometer-alt" fixed-width/></span>
+                    <span class="icon"><font-awesome-icon class="p-t-10" size="xs" icon="tachometer-alt" fixed-width/></span>
                     Dashboard
                 </a>
             </li>
             <li>
                 <a href="#" class="">
-                    <span class="icon" ><font-awesome-icon class="p-t-5" icon="chart-bar" fixed-width/></span>
+                    <span class="icon" ><font-awesome-icon class="p-t-10" size="xs" icon="chart-bar" fixed-width/></span>
                     Stats
                 </a>
             </li>
@@ -19,7 +19,7 @@
         <ul class="menu-list">
             <li>
                 <a href="{{ url('/admin/categories') }}" class="{{ Nav::hasSegment('categories', 2) }}">
-                    <span class="icon" ><font-awesome-icon class="p-t-5" icon="list-ul" fixed-width/></span>
+                    <span class="icon" ><font-awesome-icon class="p-t-10" size="xs" icon="list-ul" fixed-width/></span>
                     Categories
                 </a>
             </li>
@@ -34,14 +34,14 @@
             @can('view', 'App\Models\Admin')
                 <li>
                     <a href="{{ url('/admin/admins') }}" class="{{ Nav::hasSegment('admins', 2) }}">
-                        <span class="icon" ><font-awesome-icon class="p-t-5" icon="user-tie" fixed-width/></span>
+                        <span class="icon" ><font-awesome-icon class="p-t-10" size="xs" icon="user-tie" fixed-width/></span>
                         Admins
                     </a>
                 </li>
             @endcan
             <li>
                 <a class="has-submenu" href="#">
-                    <span class="icon" ><font-awesome-icon class="p-t-5" icon="users" fixed-width/></span>
+                    <span class="icon" ><font-awesome-icon class="p-t-10" size="xs" icon="users" fixed-width/></span>
                     Vendor Users
                 </a>
                 <ul class="submenu">
@@ -59,7 +59,7 @@
             </li>
             <li>
                 <a href="{{ url('/admin/settings') }}" class="">
-                    <span class="icon" ><font-awesome-icon class="p-t-5" icon="cogs" fixed-width/></span>
+                    <span class="icon" ><font-awesome-icon class="p-t-10" size="xs" icon="cogs" fixed-width/></span>
                     Settings
                 </a>
             </li>

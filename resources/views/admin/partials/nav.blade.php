@@ -3,7 +3,7 @@
         <div class="navbar-brand">
             <a href="{{ url('/') }}" class="navbar-item">{{ config('app.name', 'Laravel') }}</a>
             <a class="navbar-item is-hidden-desktop" id="left-slideout-button">
-                <span class="icon"><i class="fa fa-arrow-circle-o-right"></i></span>
+                <span class="icon"><font-awesome-icon class="p-t-10" size="xs" icon="arrow-right" fixed-width/></span>
             </a>
             <div class="navbar-burger burger" data-target="navMenu">
                 <span></span>

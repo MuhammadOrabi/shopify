@@ -22,7 +22,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $this->authorize('view', Category::class);
-        $categories = Category::latest()->get();
+        $categories = Category::withTrashed()->latest()->get();
         return view('admin.categories.index', compact('categories'));
     }
 

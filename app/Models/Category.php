@@ -11,8 +11,6 @@ class Category extends Model
 
     protected $guarded = [];
 
-    protected $dates = ['deleted_at'];
-
     public function images()
     {
         return $this->morphMany('App\Models\Image', 'imageable');

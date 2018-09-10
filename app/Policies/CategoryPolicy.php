@@ -74,7 +74,9 @@ class CategoryPolicy
      */
     public function restore(Admin $admin)
     {
-        //
+        if ($admin->getRole('Categories', 'restore')) {
+            return true;
+        }
     }
 
     /**

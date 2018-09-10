@@ -1,18 +1,18 @@
 <template>
     <section>
         <b-field grouped group-multiline>
-            <b-field label="Title" expanded
+            <b-field label="Title*" expanded
                     :type="errors.title ? 'is-danger': ''"
                     :message="errors.title ? errors.title[0] : ''">
                 <b-input placeholder="Title" type="text" v-model="form.title" :loading="loading"></b-input>
             </b-field>
 
-            <b-field label="slug" expanded :type="errors.slug ? 'is-danger': ''"
+            <b-field label="slug*" expanded :type="errors.slug ? 'is-danger': ''"
                     :message="errors.slug ? errors.slug[0] : ''">
                 <b-input placeholder="slug" type="text" v-model="form.slug" :loading="loading"></b-input>
             </b-field>
         </b-field>
-        <b-field label="Description" expanded
+        <b-field label="Description*" expanded
                 :type="errors.description ? 'is-danger': ''"
                 :message="errors.description ? errors.description[0] : ''">
             <b-input placeholder="Description" type="textarea" v-model="form.description" :loading="loading"></b-input>
@@ -68,7 +68,6 @@
             return {
                 data: [],
                 form: {
-                    tags: [],
                     images: []
                 },
                 errors: {},

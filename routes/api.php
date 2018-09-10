@@ -11,6 +11,8 @@
 |
 */
 Route::middleware('auth:api-admin')->prefix('admin')->group(function () {
+
+    Route::post('/categories/restore/{id}', 'API\Admin\CategoriesController@restore');
     Route::apiResources([
         'admins' => 'API\Admin\AdminsController',
         'categories' => 'API\Admin\CategoriesController'

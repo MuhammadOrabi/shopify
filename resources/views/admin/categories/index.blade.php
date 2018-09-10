@@ -7,6 +7,7 @@
         <span class="icon" ><font-awesome-icon class="m-r-10" icon="plus-square" size="xs" fixed-width/></span>
         Create
     </a>
+    <hr>
     <admin-categories-index
         categories="{{ json_encode($categories->toArray()) }}"
         site-url="{{ url('/') }}"

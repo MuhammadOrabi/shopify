@@ -46,22 +46,26 @@ class CategoriesController extends Controller
             'description' => $request->description
         ]);
 
-        foreach ($request->images as $image) {
-            $path = $this->putFileAs('/categories/' . $category->id . '/', $image);
-            $category->images()->create([
-                'url' => $path,
-                'type' => 'image'
-            ]);
+        if ($request->images) {
+            foreach ($request->images as $image) {
+                $path = $this->putFileAs('/categories/' . $category->id . '/', $image);
+                $category->images()->create([
+                    'url' => $path,
+                    'type' => 'image'
+                ]);
+            }
         }
 
-        $tags = explode(',', $request->tags);
-        foreach ($tags as $tag) {
-            $category->tags()->create([
-                'title' => $tag,
-                'type' => 'tag'
-            ]);
-        }
+        if ($request->tags) {
+            $tags = explode(',', $request->tags);
+            foreach ($tags as $tag) {
+                $category->tags()->create([
+                    'title' => $tag,
+                    'type' => 'tag'
+                ]);
+            }
 
+        }
         $message = __('admin.category-created');
         return response()->json(['message' => $message]);
     }
@@ -97,8 +101,16 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
-        $this->authorize('delete', Admin::class);
+        $this->authorize('delete', Category::class);
         $category->delete();
+        return response()->json();
+    }
+
+
+    public function restore($id)
+    {
+        $this->authorize('restore', Category::class);
+        Category::onlyTrashed()->where('id', $id)->restore();
         return response()->json();
     }
 }

@@ -1,6 +1,14 @@
 <template>
     <section>
-        <b-table :data="data" :checked-rows.sync="checkedRows" checkable>
+        <b-field label="Filter data">
+            <b-select placeholder="Select a filter" v-model="filter">
+                <option value="1">Without Trashed</option>
+                <option value="2">With Trashed</option>
+                <option value="3">Trashed Only</option>
+            </b-select>
+        </b-field>
+
+        <b-table :data="filtered" :checked-rows.sync="checkedRows" checkable>
             <template slot-scope="props">
                 <b-table-column field="id" label="ID" width="40" sortable numeric>
                     {{ props.row.id }}
@@ -21,14 +29,22 @@
                 </b-table-column>
 
                 <b-table-column label="Options">
-                    <a :href="`${siteUrl}/admin/categories/${props.row.id}`" class="button is-info is-inverted is-rounded">
+                    <a :href="`${siteUrl}/admin/categories/${props.row.id}`"
+                        title="View" class="button is-info is-inverted is-rounded">
                         <font-awesome-icon icon="eye" fixed-width size="lg"/>
                     </a>
-                    <a :href="`${siteUrl}/admin/categories/${props.row.id}/edit`" class="button is-primary is-inverted is-rounded">
+                    <a :href="`${siteUrl}/admin/categories/${props.row.id}/edit`"
+                        title="Edit" class="button is-primary is-inverted is-rounded">
                         <font-awesome-icon icon="edit" fixed-width size="lg"/>
                     </a>
-                    <button class="button is-danger is-inverted is-rounded" @click="confirmCustomDelete(props.row.id)">
+                    <button v-if="!props.row.deleted_at" title="Delete"
+                        class="button is-danger is-inverted is-rounded"
+                        @click="confirmDelete(props.row.id)">
                         <font-awesome-icon icon="trash" fixed-width size="lg"/>
+                    </button>
+                    <button v-else title="Restore" class="button is-info is-inverted is-rounded"
+                        @click="confirmRestore(props.row.id)">
+                        <font-awesome-icon icon="sync" fixed-width size="lg"/>
                     </button>
                 </b-table-column>
             </template>
@@ -46,17 +62,39 @@
         data() {
             return {
                 checkedRows: [],
-                data: []
+                data: [],
+                filter: '1'
+            }
+        },
+        computed: {
+            filtered() {
+                switch (this.filter) {
+                    case '1':
+                        return window._.reject(this.data, item => {
+                            return item.deleted_at !== null ? true : false;
+                        });
+                        break;
+
+                    case '3':
+                        return window._.reject(this.data, item => {
+                            return item.deleted_at === null ? true : false;
+                        });
+                        break;
+
+                    default:
+                        return this.data;
+                        break;
+                }
             }
         },
         mounted() {
             this.data = JSON.parse(this.categories);
         },
         methods: {
-            confirmCustomDelete(id) {
+            confirmDelete(id) {
                 this.$dialog.confirm({
                     title: 'Deleting Category',
-                    message: 'Are you sure you want to <b>delete</b> this Cateory? This action cannot be undone.',
+                    message: 'Are you sure you want to <b>delete</b> this Category?',
                     confirmText: 'Delete Category',
                     type: 'is-danger',
                     hasIcon: true,
@@ -64,13 +102,43 @@
                 });
             },
             deleteCategory(id) {
-                window.axios.delete(`${this.siteUrl}/api/admin/categories/${id}`, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
-                .then(res => {
+                window.axios.delete(`${this.siteUrl}/api/admin/categories/${id}`,
+                    {'headers': {'Authorization': `Bearer ${this.accessToken}`}}
+                ).then(res => {
+                    let category = window._.findWhere(this.data, {id: id});
                     this.data = window._.reject(this.data, category => {
                         return category.id == id;
                     });
+                    category.deleted_at = new Date();
+                    this.data.push(category);
+
                     this.checkedRows = [];
                     this.$toast.open('Category deleted!');
+                }).catch(err => console.log(err));
+            },
+            confirmRestore(id) {
+                this.$dialog.confirm({
+                    title: 'Restoring Category',
+                    message: 'Are you sure you want to <b>restore</b> this Category?',
+                    confirmText: 'Restore Category',
+                    type: 'is-warning',
+                    hasIcon: true,
+                    onConfirm: () => this.restoreCategory(id)
+                });
+            },
+            restoreCategory(id) {
+                window.axios.post(`${this.siteUrl}/api/admin/categories/restore/${id}`, {},
+                    {'headers': {'Authorization': `Bearer ${this.accessToken}`}}
+                ).then(res => {
+                    let category = window._.findWhere(this.data, {id: id});
+                    this.data = window._.reject(this.data, category => {
+                        return category.id == id;
+                    });
+                    category.deleted_at = null;
+                    this.data.push(category);
+
+                    this.checkedRows = [];
+                    this.$toast.open('Category restored!');
                 }).catch(err => console.log(err));
             }
         }

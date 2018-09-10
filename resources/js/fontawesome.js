@@ -3,12 +3,12 @@
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from '@fortawesome/vue-fontawesome'
 import {
-    faTrash, faTachometerAlt, faEdit, faChartBar, faCogs, faUserTie, faUsers, faEye, faCheck, faUserPlus, faArrowLeft, faListUl, faPlusSquare
+    faTrash, faTachometerAlt, faEdit, faChartBar, faCogs, faUserTie, faUsers, faEye, faCheck, faUserPlus, faArrowLeft, faListUl, faPlusSquare, faSync, faArrowRight
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
     faTrash, faTachometerAlt, faEdit, faChartBar, faCogs, faUserTie, faUsers, faTrash, faEye, faCheck, faUserPlus,
-    faArrowLeft, faListUl, faPlusSquare
+    faArrowLeft, faListUl, faPlusSquare, faSync, faArrowRight
 )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

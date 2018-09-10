@@ -21,5 +21,6 @@ class AdminPermissionsSeeder extends Seeder
         Permission::updateOrCreate(['title' => 'Create', 'slug' => 'create', 'model' => 'Categories']);
         Permission::updateOrCreate(['title' => 'Update', 'slug' => 'update', 'model' => 'Categories']);
         Permission::updateOrCreate(['title' => 'Delete', 'slug' => 'delete', 'model' => 'Categories']);
+        Permission::updateOrCreate(['title' => 'Restore', 'slug' => 'restore', 'model' => 'Categories']);
     }
 }
