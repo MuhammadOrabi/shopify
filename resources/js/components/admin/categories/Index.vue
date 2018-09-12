@@ -87,7 +87,7 @@
                 }
             }
         },
-        mounted() {
+        created() {
             this.data = JSON.parse(this.categories);
         },
         methods: {

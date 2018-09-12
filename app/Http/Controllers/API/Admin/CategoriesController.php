@@ -48,7 +48,7 @@ class CategoriesController extends Controller
 
         if ($request->images) {
             foreach ($request->images as $image) {
-                $path = $this->putFileAs('/categories/' . $category->id . '/', $image);
+                $path = $this->putFileAs('/categories/' . $category->id, $image);
                 $category->images()->create([
                     'url' => $path,
                     'type' => 'image'

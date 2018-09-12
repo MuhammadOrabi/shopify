@@ -57,7 +57,9 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::withTrashed()->find($id);
+        // dd($category->images->first()->path());
+        return view('admin.categories.view', compact('category'));
     }
 
     /**
