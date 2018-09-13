@@ -11,6 +11,8 @@ window.Vue = require('vue');
 
 require('./fontawesome');
 
+require('./firebase');
+
 // Buefy
 import Buefy from 'buefy'
 
@@ -29,6 +31,8 @@ Vue.component('admin-admins-form', require('./components/admin/admins/Form.vue')
 
 Vue.component('admin-categories-index', require('./components/admin/categories/Index.vue'));
 Vue.component('admin-categories-form', require('./components/admin/categories/Form.vue'));
+
+Vue.component('partials-media-form', require('./components/partials/Media.vue'));
 
 const app = new Vue({
     el: '#app'

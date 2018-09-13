@@ -29,30 +29,7 @@
                 @typing="getFilteredTags">
             </b-taginput>
         </b-field>
-        <b-field>
-            <b-upload v-model="form.images" multiple drag-drop accept="image/*">
-                <section class="section">
-                    <div class="content has-text-centered">
-                        <p>
-                            <b-icon icon="upload" size="is-large"></b-icon>
-                        </p>
-                        <p>Drop your files here or click to upload</p>
-                    </div>
-                </section>
-            </b-upload>
-        </b-field>
-
-        <div class="tags">
-            <span v-for="(file, index) in form.images"
-                :key="index"
-                class="tag is-primary" >
-                {{file.name}}
-                <button class="delete is-small"
-                    type="button"
-                    @click="deleteDropFile(index)">
-                </button>
-            </span>
-        </div>
+        <partials-media-form v-model="form.images"></partials-media-form>
         <button class="button is-success is-centered" @click="save" >
             <span class="icon" ><font-awesome-icon icon="check" size="xs" fixed-width/></span>
             <span>Save</span>
@@ -87,9 +64,7 @@
                         .indexOf(text.toLowerCase()) >= 0;
                 });
             },
-            deleteDropFile(index) {
-                this.form.images.splice(index, 1);
-            },
+
             save() {
                 this.loading = true;
                 this.errors = {};
