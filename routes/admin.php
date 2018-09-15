@@ -14,6 +14,8 @@ Route::middleware('auth:web-admin')->group(function () {
     Route::resource('admins', 'Admin\AdminsController');
 
     Route::resource('categories', 'Admin\CategoriesController');
+
+    Route::resource('media', 'Admin\MediaController');
 });
 
 Route::get('/login', 'Admin\Auth\LoginController@showLoginForm')->name('login');

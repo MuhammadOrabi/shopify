@@ -29,7 +29,25 @@
                 @typing="getFilteredTags">
             </b-taginput>
         </b-field>
-        <partials-media-form v-model="form.images"></partials-media-form>
+        <b-field>
+            <button class="button is-link" @click="openMedia">Add image</button>
+        </b-field>
+        <section class="p-t-20 columns" v-if="form.image">
+            <div class="column is-one-quarter">
+                <figure class="image is-square">
+                    <img :src="form.image">
+                </figure>
+            </div>
+        </section>
+        <b-modal :active.sync="isCardModalActive" :width="960" scroll="keep">
+            <div class="card">
+                <div class="card-content">
+                    <admin-media :access-token="accessToken" :site-url="siteUrl"
+                        :form="true" v-model="selectedImage"
+                        ></admin-media>
+                </div>
+            </div>
+        </b-modal>
         <button class="button is-success is-centered" @click="save" >
             <span class="icon" ><font-awesome-icon icon="check" size="xs" fixed-width/></span>
             <span>Save</span>
@@ -40,20 +58,28 @@
 <script>
     export default {
         name: 'Form',
-        props: ['tags', 'admin', 'siteUrl', 'accessToken'],
+        props: ['tags', 'category', 'siteUrl', 'accessToken'],
         data () {
             return {
                 data: [],
                 form: {
-                    images: []
+                    tags: []
                 },
+                selectedImage: null,
                 errors: {},
                 loading: false,
                 isSelectOnly: false,
+                isCardModalActive: false
             }
         },
-        mounted() {
+        created() {
             this.data = JSON.parse(this.tags);
+        },
+        watch: {
+            selectedImage() {
+                this.form.image = this.selectedImage;
+                this.isCardModalActive = false;
+            }
         },
         methods: {
             getFilteredTags() {
@@ -64,43 +90,30 @@
                         .indexOf(text.toLowerCase()) >= 0;
                 });
             },
-
+            openMedia() {
+                this.isCardModalActive = true;
+            },
             save() {
                 this.loading = true;
+                // this.form.image = this.$refs.media.links;
                 this.errors = {};
-                if (this.admin) {
+                if (this.category) {
                     this.update();
                 } else {
                     this.create();
                 }
             },
             create() {
-                let form = new FormData();
-
-                for ( const key in this.form ) {
-                    if (key == 'images') {
-                        for (const image in this.form[key]) {
-                            form.append('images[]', this.form[key][image]);
-                        }
-                    } else {
-                        form.append(key, this.form[key]);
-                    }
-                }
-                window.axios.post(`${this.siteUrl}/api/admin/categories`, form, {
-                    'headers': {
-                        'Authorization': `Bearer ${this.accessToken}`,
-                        'content-type': 'multipart/form-data'
-                    }
-                })
-                .then(res => {
+                window.axios.post(`${this.siteUrl}/api/admin/categories`, this.form, {
+                    'headers': {'Authorization': `Bearer ${this.accessToken}`}
+                }).then(res => {
                     this.loading = false;
                     this.form = {};
                     this.$toast.open({
                         message: res.data.message,
                         type: 'is-success'
                     });
-                })
-                .catch(err => {
+                }).catch(err => {
                     this.errors = err.response.data.errors ? err.response.data.errors : {};
                     this.loading = false;
                     this.$toast.open({
@@ -110,16 +123,16 @@
                 });
             },
             update() {
-                let admin = JSON.parse(this.admin);
-                window.axios.put(`${this.siteUrl}/api/admin/categories/${admin.id}`, this.form, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
-                .then(res => {
+                let category = JSON.parse(this.category);
+                window.axios.put(`${this.siteUrl}/api/admin/categories/${admin.id}`, this.form, {
+                    'headers': {'Authorization': `Bearer ${this.accessToken}`}
+                }).then(res => {
                     this.loading = false;
                     this.$toast.open({
                         message: res.data.message,
                         type: 'is-success'
                     });
-                })
-                .catch(err => {
+                }).catch(err => {
                     this.errors = err.response.data.errors ? err.response.data.errors : {};
                     this.loading = false;
                     this.$toast.open({

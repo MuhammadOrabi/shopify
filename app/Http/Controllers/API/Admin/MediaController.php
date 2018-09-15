@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\API\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\Category;
-use App\Models\Tag;
 
-class CategoriesController extends Controller
+class MediaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,21 +14,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', Category::class);
-        $categories = Category::withTrashed()->latest()->get();
-        return view('admin.categories.index', compact('categories'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $this->authorize('create', Category::class);
-        $tags = Tag::all();
-        return view('admin.categories.create', compact('tags'));
+        $files = auth('api-admin')->user()->files()->latest()->get();
+        return response()->json($files);
     }
 
     /**
@@ -42,7 +26,17 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'url' => 'required|url',
+            'type' => 'required|string'
+        ]);
+
+        $file = auth('api-admin')->user()->files()->create([
+            'type' => $request->type,
+            'links' => collect(['normal' => $request->url])
+        ]);
+
+        return response()->json($file);
     }
 
     /**
@@ -52,18 +46,6 @@ class CategoriesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        $category = Category::withTrashed()->find($id);
-        return view('admin.categories.view', compact('category'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

@@ -47,3 +47,14 @@ a.is-muted:hover {
 	}
 }
 
+
+
+.upload .upload-draggable {
+    position: relative;
+    width: 100% !important;
+    height: 50px;
+    padding-bottom: 100%;
+    @include desktop {
+        padding-bottom: 40%;
+    }
+}

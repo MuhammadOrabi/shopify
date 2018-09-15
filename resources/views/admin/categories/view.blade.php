@@ -39,12 +39,9 @@
                                 <td>
                                     <div class="columns">
                                         @foreach($category->images as $image)
-                                            {{--  {{ dd(get_class_methods(app()->make('firebase')->object($image->url)->signedUrl())) }}  --}}
-                                            {{--  {{dd($image->url)}}  --}}
-                                            {{ dd( app()->make('firebase')->object($image->url)->exists() ) }}
                                             <div class="column">
                                                 <figure class="image is-128x128">
-                                                    <img src="{{ $image->path() }}">
+                                                    <img src="{{ $image->url }}">
                                                 </figure>
                                             </div>
                                         @endforeach

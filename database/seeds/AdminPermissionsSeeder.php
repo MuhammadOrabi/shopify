@@ -12,15 +12,22 @@ class AdminPermissionsSeeder extends Seeder
      */
     public function run()
     {
-        Permission::updateOrCreate(['title' => 'View', 'slug' => 'view', 'model' => 'Admins']);
-        Permission::updateOrCreate(['title' => 'Create', 'slug' => 'create', 'model' => 'Admins']);
-        Permission::updateOrCreate(['title' => 'Update', 'slug' => 'update', 'model' => 'Admins']);
-        Permission::updateOrCreate(['title' => 'Delete', 'slug' => 'delete', 'model' => 'Admins']);
+        Permission::updateOrCreate(['title' => 'View', 'slug' => 'view', 'model' => 'Admin']);
+        Permission::updateOrCreate(['title' => 'Create', 'slug' => 'create', 'model' => 'Admin']);
+        Permission::updateOrCreate(['title' => 'Update', 'slug' => 'update', 'model' => 'Admin']);
+        Permission::updateOrCreate(['title' => 'Delete', 'slug' => 'delete', 'model' => 'Admin']);
+        Permission::updateOrCreate(['title' => 'Restore', 'slug' => 'restore', 'model' => 'Admin']);
 
-        Permission::updateOrCreate(['title' => 'View', 'slug' => 'view', 'model' => 'Categories']);
-        Permission::updateOrCreate(['title' => 'Create', 'slug' => 'create', 'model' => 'Categories']);
-        Permission::updateOrCreate(['title' => 'Update', 'slug' => 'update', 'model' => 'Categories']);
-        Permission::updateOrCreate(['title' => 'Delete', 'slug' => 'delete', 'model' => 'Categories']);
-        Permission::updateOrCreate(['title' => 'Restore', 'slug' => 'restore', 'model' => 'Categories']);
+        Permission::updateOrCreate(['title' => 'View', 'slug' => 'view', 'model' => 'Category']);
+        Permission::updateOrCreate(['title' => 'Create', 'slug' => 'create', 'model' => 'Category']);
+        Permission::updateOrCreate(['title' => 'Update', 'slug' => 'update', 'model' => 'Category']);
+        Permission::updateOrCreate(['title' => 'Delete', 'slug' => 'delete', 'model' => 'Category']);
+        Permission::updateOrCreate(['title' => 'Restore', 'slug' => 'restore', 'model' => 'Category']);
+
+        Permission::updateOrCreate(['title' => 'View', 'slug' => 'view', 'model' => 'Image']);
+        Permission::updateOrCreate(['title' => 'Create', 'slug' => 'create', 'model' => 'Image']);
+        Permission::updateOrCreate(['title' => 'Update', 'slug' => 'update', 'model' => 'Image']);
+        Permission::updateOrCreate(['title' => 'Delete', 'slug' => 'delete', 'model' => 'Image']);
+        Permission::updateOrCreate(['title' => 'Restore', 'slug' => 'restore', 'model' => 'Image']);
     }
 }

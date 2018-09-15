@@ -24,8 +24,9 @@
                 </a>
             </li>
             <li>
-                <a href="" class="">
-                    <span class="icon"><i class="fa fa-fw m-r-10 fa-picture-o"></i></span>Media
+                <a href="{{ url('/admin/media') }}" class="{{ Nav::hasSegment('media', 2) }}">
+                    <span class="icon" ><font-awesome-icon class="p-t-10" size="xs" icon="images" fixed-width/></span>
+                    Media
                 </a>
             </li>
         </ul>

@@ -54,4 +54,9 @@ class Admin extends Authenticatable
             $query->where('model', $model)->where('slug', $slug);
         })->get()->first();
     }
+
+    public function files()
+    {
+        return $this->morphMany('App\Models\File', 'owner');
+    }
 }

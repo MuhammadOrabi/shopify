@@ -9,13 +9,11 @@
         "devmarketer/easynav": "^1.0",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",
-        "kreait/firebase-php": "^4.16.0",
         "laravel-frontend-presets/bulma": "^1.7",
         "laravel-frontend-presets/tailwindcss": "^0.6.1",
         "laravel/framework": "5.7.*",
         "laravel/passport": "^7.0",
-        "laravel/tinker": "^1.0",
-        "superbalist/flysystem-google-storage": "^7.0"
+        "laravel/tinker": "^1.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

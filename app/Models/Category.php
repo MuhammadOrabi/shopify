@@ -11,9 +11,9 @@ class Category extends Model
 
     protected $guarded = [];
 
-    public function images()
+    public function files()
     {
-        return $this->morphMany('App\Models\Image', 'imageable');
+        return $this->morphMany('App\Models\File', 'fileable');
     }
 
     public function items()

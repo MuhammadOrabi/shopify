@@ -19,20 +19,20 @@ class CategoryPolicy
      */
     public function view(Admin $admin)
     {
-        if ($admin->getRole('Categories', 'view')) {
+        if ($admin->getRole('Category', 'view')) {
             return true;
         }
     }
 
     /**
-     * Determine whether the user can create categories.
+     * Determine whether the user can create category.
      *
      * @param  \App\Models\Admin  $admin
      * @return mixed
      */
     public function create(Admin $admin)
     {
-        if ($admin->getRole('Categories', 'create')) {
+        if ($admin->getRole('Category', 'create')) {
             return true;
         }
     }
@@ -46,7 +46,7 @@ class CategoryPolicy
      */
     public function update(Admin $admin)
     {
-        if ($admin->getRole('Categories', 'update')) {
+        if ($admin->getRole('Category', 'update')) {
             return true;
         }
     }
@@ -60,7 +60,7 @@ class CategoryPolicy
      */
     public function delete(Admin $admin)
     {
-        if ($admin->getRole('Categories', 'delete')) {
+        if ($admin->getRole('Category', 'delete')) {
             return true;
         }
     }
@@ -74,7 +74,7 @@ class CategoryPolicy
      */
     public function restore(Admin $admin)
     {
-        if ($admin->getRole('Categories', 'restore')) {
+        if ($admin->getRole('Category', 'restore')) {
             return true;
         }
     }

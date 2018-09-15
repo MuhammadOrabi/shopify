@@ -5,14 +5,10 @@ namespace App\Http\Controllers\API\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Category;
-use App\Traits\Firebase;
 use Illuminate\Http\Request;
-use Kreait\Firebase\Factory;
-use Kreait\Firebase\ServiceAccount;
 
 class CategoriesController extends Controller
 {
-    use Firebase;
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +32,7 @@ class CategoriesController extends Controller
             'title' => 'required|string|max:255',
             'slug' => 'required|string|unique:categories',
             'description' => 'required|string',
-            'tags' => 'string',
+            'tags' => 'array',
             'images' => 'array',
         ]);
 
@@ -48,17 +44,15 @@ class CategoriesController extends Controller
 
         if ($request->images) {
             foreach ($request->images as $image) {
-                $path = $this->putFileAs('/categories/' . $category->id, $image);
                 $category->images()->create([
-                    'url' => $path,
+                    'url' => $image,
                     'type' => 'image'
                 ]);
             }
         }
 
         if ($request->tags) {
-            $tags = explode(',', $request->tags);
-            foreach ($tags as $tag) {
+            foreach ($request->tags as $tag) {
                 $category->tags()->create([
                     'title' => $tag,
                     'type' => 'tag'

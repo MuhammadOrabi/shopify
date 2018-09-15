@@ -17,7 +17,7 @@ class AdminPolicy
      */
     public function view(Admin $admin)
     {
-        if ($admin->getRole('Admins', 'view')) {
+        if ($admin->getRole('Admin', 'view')) {
             return true;
         }
     }
@@ -30,7 +30,7 @@ class AdminPolicy
      */
     public function create(Admin $admin)
     {
-        if ($admin->getRole('Admins', 'create')) {
+        if ($admin->getRole('Admin', 'create')) {
             return true;
         }
     }
@@ -43,7 +43,7 @@ class AdminPolicy
      */
     public function update(Admin $admin)
     {
-        if ($admin->getRole('Admins', 'update')) {
+        if ($admin->getRole('Admin', 'update')) {
             return true;
         }
     }
@@ -56,7 +56,7 @@ class AdminPolicy
      */
     public function delete(Admin $admin)
     {
-        if ($admin->getRole('Admins', 'delete')) {
+        if ($admin->getRole('Admin', 'delete')) {
             return true;
         }
     }
@@ -69,7 +69,9 @@ class AdminPolicy
      */
     public function restore(Admin $admin)
     {
-        //
+        if ($admin->getRole('Admin', 'restore')) {
+            return true;
+        }
     }
 
     /**

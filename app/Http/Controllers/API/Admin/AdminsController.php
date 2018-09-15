@@ -16,7 +16,7 @@ class AdminsController extends Controller
      */
     public function index()
     {
-        //
+        dd('admin.api.controller');
     }
 
     /**

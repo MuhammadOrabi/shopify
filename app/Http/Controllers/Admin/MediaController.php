@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\Category;
-use App\Models\Tag;
 
-class CategoriesController extends Controller
+class MediaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +14,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $this->authorize('view', Category::class);
-        $categories = Category::withTrashed()->latest()->get();
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.media.index');
     }
 
     /**
@@ -29,9 +24,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Category::class);
-        $tags = Tag::all();
-        return view('admin.categories.create', compact('tags'));
+        //
     }
 
     /**
@@ -53,8 +46,7 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        $category = Category::withTrashed()->find($id);
-        return view('admin.categories.view', compact('category'));
+        //
     }
 
     /**
