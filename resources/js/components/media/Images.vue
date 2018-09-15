@@ -8,7 +8,7 @@
         <section class="p-t-20 columns is-multiline">
             <div class="column is-one-quarter" v-for="(img, i) in images" :key="i">
                 <figure class="image is-square">
-                    <img :src="img.links.normal" @click="selectImg(img.links.normal)">
+                    <img :src="img.links.normal" @click="selectImg(img)">
                 </figure>
             </div>
         </section>
@@ -26,13 +26,13 @@
             };
         },
         methods: {
-            selectImg(url) {
+            selectImg(image) {
                 if (this.form) {
-                    this.$emit('input', url);
+                    this.$emit('input', image);
                     return;
                 }
                 this.viewImage = true;
-                this.selectedImage = url;
+                this.selectedImage = image.links.normal;
             }
         }
     }

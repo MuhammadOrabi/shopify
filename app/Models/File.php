@@ -11,7 +11,7 @@ class File extends Model
 
     protected $guarded = [];
     protected $casts = [
-        'links' => 'collection',
+        'links' => 'array',
     ];
 
 
@@ -22,6 +22,6 @@ class File extends Model
 
     public function categories()
     {
-        return $this->morphedByMany('App\Category', 'fileable');
+        return $this->morphedByMany('App\Models\Category', 'fileable');
     }
 }

@@ -38,10 +38,10 @@
                                 <td>Images</td>
                                 <td>
                                     <div class="columns">
-                                        @foreach($category->images as $image)
+                                        @foreach($category->images() as $image)
                                             <div class="column">
                                                 <figure class="image is-128x128">
-                                                    <img src="{{ $image->url }}">
+                                                    <img src="{{ $image->links['normal'] }}">
                                                 </figure>
                                             </div>
                                         @endforeach

@@ -13,7 +13,7 @@ class Category extends Model
 
     public function files()
     {
-        return $this->morphMany('App\Models\File', 'fileable');
+        return $this->morphToMany('App\Models\File', 'fileable');
     }
 
     public function items()
@@ -23,6 +23,11 @@ class Category extends Model
 
     public function tags()
     {
-        return $this->morphMany('App\Models\Tag', 'tagable');
+        return $this->morphToMany('App\Models\Tag', 'taggable');
+    }
+
+    public function images()
+    {
+        return $this->files()->whereType('image')->get();
     }
 }

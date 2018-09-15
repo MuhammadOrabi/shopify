@@ -8,8 +8,8 @@ class Tag extends Model
 {
     protected $guarded = [];
 
-    public function tagable()
+    public function categories()
     {
-        return $this->morphTo();
+        return $this->morphedByMany('App\Models\Category', 'taggable');
     }
 }

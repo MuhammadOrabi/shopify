@@ -32,10 +32,10 @@
         <b-field>
             <button class="button is-link" @click="openMedia">Add image</button>
         </b-field>
-        <section class="p-t-20 columns" v-if="form.image">
+        <section class="p-t-20 columns" v-if="selectedImage">
             <div class="column is-one-quarter">
                 <figure class="image is-square">
-                    <img :src="form.image">
+                    <img :src="selectedImage.links.normal">
                 </figure>
             </div>
         </section>
@@ -77,7 +77,7 @@
         },
         watch: {
             selectedImage() {
-                this.form.image = this.selectedImage;
+                this.form.image = this.selectedImage.id;
                 this.isCardModalActive = false;
             }
         },
@@ -87,7 +87,7 @@
                     return option.title
                         .toString()
                         .toLowerCase()
-                        .indexOf(text.toLowerCase()) >= 0;
+                        .indexOf(option.title.toLowerCase()) >= 0;
                 });
             },
             openMedia() {

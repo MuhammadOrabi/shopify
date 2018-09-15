@@ -33,7 +33,6 @@ class CategoriesController extends Controller
             'slug' => 'required|string|unique:categories',
             'description' => 'required|string',
             'tags' => 'array',
-            'images' => 'array',
         ]);
 
         $category = Category::create([
@@ -42,21 +41,20 @@ class CategoriesController extends Controller
             'description' => $request->description
         ]);
 
-        if ($request->images) {
-            foreach ($request->images as $image) {
-                $category->images()->create([
-                    'url' => $image,
-                    'type' => 'image'
-                ]);
-            }
+        if ($request->image) {
+            $category->files()->attach($request->image);
         }
 
         if ($request->tags) {
             foreach ($request->tags as $tag) {
-                $category->tags()->create([
-                    'title' => $tag,
-                    'type' => 'tag'
-                ]);
+                if (is_string($tag)) {
+                    $category->tags()->create([
+                        'title' => $tag,
+                        'type' => 'tag'
+                    ]);
+                } else {
+                    $category->tags()->attach($tag['id']);
+                }
             }
 
         }
@@ -93,10 +91,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($category)
     {
         $this->authorize('delete', Category::class);
-        $category->delete();
+        Category::whereId($category)->delete();
         return response()->json();
     }
 
