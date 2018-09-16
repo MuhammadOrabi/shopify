@@ -53,7 +53,7 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        $category = Category::withTrashed()->find($id);
+        $category = Category::withTrashed()->findOrFail($id);
         return view('admin.categories.view', compact('category'));
     }
 
@@ -65,7 +65,9 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::withTrashed()->with('tags', 'files')->findOrFail($id);
+        $tags = Tag::all();
+        return view('admin.categories.edit', compact('category', 'tags'));
     }
 
     /**

@@ -8,7 +8,7 @@
             </b-select>
         </b-field>
 
-        <b-table :data="filtered" :checked-rows.sync="checkedRows" checkable>
+        <b-table :data="filtered ? filtered : []" :checked-rows.sync="checkedRows" checkable>
             <template slot-scope="props">
                 <b-table-column field="id" label="ID" width="40" sortable numeric>
                     {{ props.row.id }}
@@ -51,6 +51,16 @@
 
             <template slot="bottom-left">
                 <b>Total checked</b>: {{ checkedRows.length }}
+            </template>
+            <template slot="empty">
+                <section class="section">
+                    <div class="content has-text-grey has-text-centered">
+                        <p>
+                            <b-icon icon="emoticon-sad" size="is-large"></b-icon>
+                        </p>
+                        <p>Nothing here.</p>
+                    </div>
+                </section>
             </template>
         </b-table>
     </section>

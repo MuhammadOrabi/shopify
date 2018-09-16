@@ -20,7 +20,7 @@
         <b-field label="Enter some tags">
             <b-taginput
                 v-model="form.tags"
-                :data="data"
+                :data="tags"
                 autocomplete
                 :allow-new="true"
                 field="title"
@@ -39,7 +39,7 @@
                 </figure>
             </div>
         </section>
-        <b-modal :active.sync="isCardModalActive" :width="960" scroll="keep">
+        <b-modal :active.sync="isCardModalActive" scroll="keep" :width="'100%'" id="full">
             <div class="card">
                 <div class="card-content">
                     <admin-media :access-token="accessToken" :site-url="siteUrl"
@@ -61,7 +61,6 @@
         props: ['tags', 'category', 'siteUrl', 'accessToken'],
         data () {
             return {
-                data: [],
                 form: {
                     tags: []
                 },
@@ -73,7 +72,16 @@
             }
         },
         created() {
-            this.data = JSON.parse(this.tags);
+            if (this.category) {
+                this.form.title = this.category.title;
+                this.form.slug = this.category.slug;
+                this.form.description = this.category.description;
+                this.form.tags = this.category.tags;
+                let image = window._.findWhere(this.category.files, {type: 'image'});
+
+                this.form.image = image ? image : null;
+                this.selectedImage = image ? image : null;
+            }
         },
         watch: {
             selectedImage() {
@@ -83,7 +91,7 @@
         },
         methods: {
             getFilteredTags() {
-                this.filteredTags = this.data.filter(option => {
+                this.filteredTags = this.tags.filter(option => {
                     return option.title
                         .toString()
                         .toLowerCase()
@@ -95,7 +103,6 @@
             },
             save() {
                 this.loading = true;
-                // this.form.image = this.$refs.media.links;
                 this.errors = {};
                 if (this.category) {
                     this.update();
@@ -109,6 +116,7 @@
                 }).then(res => {
                     this.loading = false;
                     this.form = {};
+                    this.selectedImage = null;
                     this.$toast.open({
                         message: res.data.message,
                         type: 'is-success'
@@ -123,8 +131,7 @@
                 });
             },
             update() {
-                let category = JSON.parse(this.category);
-                window.axios.put(`${this.siteUrl}/api/admin/categories/${admin.id}`, this.form, {
+                window.axios.put(`${this.siteUrl}/api/admin/categories/${this.category.id}`, this.form, {
                     'headers': {'Authorization': `Bearer ${this.accessToken}`}
                 }).then(res => {
                     this.loading = false;
@@ -145,5 +152,4 @@
     }
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>

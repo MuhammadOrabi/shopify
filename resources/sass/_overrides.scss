@@ -58,3 +58,9 @@ a.is-muted:hover {
         padding-bottom: 40%;
     }
 }
+#full {
+    .animation-content.modal-content {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}

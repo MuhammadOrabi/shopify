@@ -18,7 +18,7 @@
         props: ['accessToken', 'siteUrl', 'form'],
         data() {
             return {
-                activeTab: 0,
+                activeTab: 1,
                 files: [],
                 selectedImage: null
             };

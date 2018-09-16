@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
 {
+
+    public $rules = [
+        'title' => 'required|string|max:255',
+        'slug' => 'required|string|unique:categories',
+        'description' => 'required|string',
+        'tags' => 'array',
+
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -28,12 +37,7 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         $this->authorize('create', Category::class);
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'required|string|unique:categories',
-            'description' => 'required|string',
-            'tags' => 'array',
-        ]);
+        $request->validate($this->rules);
 
         $category = Category::create([
             'title' => $request->title,
@@ -82,7 +86,36 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->authorize('update', Category::class);
+        $this->rules['slug'] = 'required|string';
+        $request->validate($this->rules);
+
+        $category = Category::findOrFail($id);
+        Category::whereId($id)->update([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description
+        ]);
+
+        if ($request->image) {
+            $category->files()->sync($request->image);
+        }
+
+        if ($request->tags) {
+            foreach ($request->tags as $tag) {
+                if (is_string($tag)) {
+                    $category->tags()->create([
+                        'title' => $tag,
+                        'type' => 'tag'
+                    ]);
+                } else {
+                    $category->tags()->sync($tag['id']);
+                }
+            }
+
+        }
+        $message = __('admin.category-updated');
+        return response()->json(['message' => $message]);
     }
 
     /**
