@@ -1,3 +1,4 @@
 Media features:
     - Generate sizes
+    - crop image
     - 

@@ -16,7 +16,6 @@
                         roles="{{ json_encode($roles->toArray()) }}"
                         admin="{{ json_encode($admin->toArray()) }}"
                         site-url="{{ url('/') }}"
-                        access-token="{{ auth('web-admin')->user()->createToken('Token')->accessToken }}"
                         ></admin-admins-form>
                 </div>
             </nav>

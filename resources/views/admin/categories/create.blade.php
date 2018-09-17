@@ -15,7 +15,6 @@
                     <admin-categories-form
                         tags="{{ json_encode($tags->toArray()) }}"
                         site-url="{{ url('/') }}"
-                        access-token="{{ auth('web-admin')->user()->createToken('Token')->accessToken }}"
                         ></admin-categories-form>
                 </div>
             </nav>

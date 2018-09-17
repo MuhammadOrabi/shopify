@@ -17,7 +17,13 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            axios.get('/api/user').then((result) => {
+               console.log(result.data);
+
+            }).catch((err) => {
+                console.log(err);
+
+            });
         }
     }
 </script>

@@ -42,7 +42,7 @@
 
 <script>
     export default {
-        props: ['admins', 'siteUrl', 'accessToken'],
+        props: ['admins', 'siteUrl'],
         data() {
             return {
                 checkedRows: [],
@@ -64,7 +64,7 @@
                 });
             },
             deleteUser(id) {
-                window.axios.delete(`${this.siteUrl}/api/admin/admins/${id}`, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
+                window.axios.delete(`${this.siteUrl}/api/admin/admins/${id}`)
                 .then(res => {
                     this.data = window._.reject(this.data, admin => {
                         return admin.id == id;

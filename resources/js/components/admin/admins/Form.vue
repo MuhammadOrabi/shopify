@@ -44,7 +44,7 @@
 <script>
     export default {
         name: 'Form',
-        props: ['roles', 'admin', 'siteUrl', 'accessToken'],
+        props: ['roles', 'admin', 'siteUrl'],
         data () {
             return {
                 data: [],
@@ -75,7 +75,7 @@
                 }
             },
             create() {
-                window.axios.post(`${this.siteUrl}/api/admin/admins`, this.form, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
+                window.axios.post(`${this.siteUrl}/api/admin/admins`, this.form)
                 .then(res => {
                     this.loading = false;
                     this.form = {};
@@ -95,7 +95,7 @@
             },
             update() {
                 let admin = JSON.parse(this.admin);
-                window.axios.put(`${this.siteUrl}/api/admin/admins/${admin.id}`, this.form, {'headers': {'Authorization': `Bearer ${this.accessToken}`}})
+                window.axios.put(`${this.siteUrl}/api/admin/admins/${admin.id}`, this.form)
                 .then(res => {
                     this.loading = false;
                     this.$toast.open({

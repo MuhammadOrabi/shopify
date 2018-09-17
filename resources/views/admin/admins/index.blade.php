@@ -10,6 +10,5 @@
     <admin-admins-index
         admins="{{ json_encode($admins->toArray()) }}"
         site-url="{{ url('/') }}"
-        access-token="{{ auth('web-admin')->user()->createToken('Token')->accessToken }}"
         ></admin-admins-index>
 @endsection

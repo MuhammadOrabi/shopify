@@ -19,7 +19,7 @@
 <script>
     export default {
         name: 'Upload',
-        props: ['accessToken', 'siteUrl'],
+        props: ['siteUrl'],
         data() {
             return {
                 files: [],
@@ -65,9 +65,8 @@
             },
             save(url, type) {
                 let data = { url: url, type: type };
-                window.axios.post(`${this.siteUrl}/api/admin/media`, data, {
-                    'headers': {'Authorization': `Bearer ${this.accessToken}`}
-                }).then(res => {
+                window.axios.post(`${this.siteUrl}/api/admin/media`, data)
+                .then(res => {
                     this.$toast.open({
                         message: 'The File saved sucessfully!',
                         type: 'is-success'

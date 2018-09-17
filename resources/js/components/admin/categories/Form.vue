@@ -58,7 +58,7 @@
 <script>
     export default {
         name: 'Form',
-        props: ['tags', 'category', 'siteUrl', 'accessToken'],
+        props: ['tags', 'category', 'siteUrl'],
         data () {
             return {
                 form: {
@@ -111,9 +111,8 @@
                 }
             },
             create() {
-                window.axios.post(`${this.siteUrl}/api/admin/categories`, this.form, {
-                    'headers': {'Authorization': `Bearer ${this.accessToken}`}
-                }).then(res => {
+                window.axios.post(`${this.siteUrl}/api/admin/categories`, this.form)
+                .then(res => {
                     this.loading = false;
                     this.form = {};
                     this.selectedImage = null;
@@ -131,9 +130,8 @@
                 });
             },
             update() {
-                window.axios.put(`${this.siteUrl}/api/admin/categories/${this.category.id}`, this.form, {
-                    'headers': {'Authorization': `Bearer ${this.accessToken}`}
-                }).then(res => {
+                window.axios.put(`${this.siteUrl}/api/admin/categories/${this.category.id}`, this.form)
+                .then(res => {
                     this.loading = false;
                     this.$toast.open({
                         message: res.data.message,

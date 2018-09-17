@@ -68,7 +68,7 @@
 
 <script>
     export default {
-        props: ['categories', 'siteUrl', 'accessToken'],
+        props: ['categories', 'siteUrl'],
         data() {
             return {
                 checkedRows: [],
@@ -112,9 +112,8 @@
                 });
             },
             deleteCategory(id) {
-                window.axios.delete(`${this.siteUrl}/api/admin/categories/${id}`,
-                    {'headers': {'Authorization': `Bearer ${this.accessToken}`}}
-                ).then(res => {
+                window.axios.delete(`${this.siteUrl}/api/admin/categories/${id}`)
+                .then(res => {
                     let category = window._.findWhere(this.data, {id: id});
                     this.data = window._.reject(this.data, category => {
                         return category.id == id;
@@ -137,9 +136,8 @@
                 });
             },
             restoreCategory(id) {
-                window.axios.post(`${this.siteUrl}/api/admin/categories/restore/${id}`, {},
-                    {'headers': {'Authorization': `Bearer ${this.accessToken}`}}
-                ).then(res => {
+                window.axios.post(`${this.siteUrl}/api/admin/categories/restore/${id}`, {})
+                .then(res => {
                     let category = window._.findWhere(this.data, {id: id});
                     this.data = window._.reject(this.data, category => {
                         return category.id == id;

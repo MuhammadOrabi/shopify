@@ -1,12 +1,11 @@
 <template>
     <b-tabs v-model="activeTab">
         <b-tab-item label="Upload Files" icon="upload">
-            <admin-media-upload ref="upload" :access-token="accessToken" :site-url="siteUrl" v-on:uploaded="uploaded"></admin-media-upload>
+            <admin-media-upload ref="upload" :site-url="siteUrl" v-on:uploaded="uploaded"></admin-media-upload>
         </b-tab-item>
         <b-tab-item label="Pictures" icon="google-photos">
-            <admin-media-images ref="images" :images="images" :form="form" v-model="selectedImage"
-                :access-token="accessToken" :site-url="siteUrl"
-                ></admin-media-images>
+            <admin-media-images ref="images" :images="images"
+            :form="form" v-model="selectedImage"  :site-url="siteUrl"></admin-media-images>
         </b-tab-item>
         <b-tab-item label="Videos" icon="video"></b-tab-item>
     </b-tabs>
@@ -15,7 +14,7 @@
 <script>
     export default {
         name: 'Index',
-        props: ['accessToken', 'siteUrl', 'form'],
+        props: ['siteUrl', 'form'],
         data() {
             return {
                 activeTab: 1,
@@ -44,9 +43,8 @@
         },
         methods: {
             getData() {
-                window.axios.get(`${this.siteUrl}/api/admin/media`, {
-                    'headers': {'Authorization': `Bearer ${this.accessToken}`}
-                }).then(res => {
+                window.axios.get(`${this.siteUrl}/api/admin/media`)
+                .then(res => {
                     this.files = res.data;
                 }).catch(err => console.log(err));
             },

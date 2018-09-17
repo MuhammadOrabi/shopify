@@ -11,6 +11,5 @@
     <admin-categories-index
         categories="{{ json_encode($categories->toArray()) }}"
         site-url="{{ url('/') }}"
-        access-token="{{ auth('web-admin')->user()->createToken('Token')->accessToken }}"
         ></admin-categories-index>
 @endsection

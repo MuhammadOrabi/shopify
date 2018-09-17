@@ -14,9 +14,7 @@
                 <div class="card-content" >
                     <admin-admins-form
                         roles="{{ json_encode($roles->toArray()) }}"
-                        site-url="{{ url('/') }}"
-                        access-token="{{ auth('web-admin')->user()->createToken('Token')->accessToken }}"
-                        ></admin-admins-form>
+                        site-url="{{ url('/') }}"></admin-admins-form>
                 </div>
             </nav>
         </div>
