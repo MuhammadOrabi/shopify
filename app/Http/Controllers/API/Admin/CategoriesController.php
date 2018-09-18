@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use \App\Repositories\Categories;
 
 class CategoriesController extends Controller
 {
@@ -39,29 +40,8 @@ class CategoriesController extends Controller
         $this->authorize('create', Category::class);
         $request->validate($this->rules);
 
-        $category = Category::create([
-            'title' => $request->title,
-            'slug' => $request->slug,
-            'description' => $request->description
-        ]);
+        $category = Categories::create();
 
-        if ($request->image) {
-            $category->files()->attach($request->image);
-        }
-
-        if ($request->tags) {
-            foreach ($request->tags as $tag) {
-                if (is_string($tag)) {
-                    $category->tags()->create([
-                        'title' => $tag,
-                        'type' => 'tag'
-                    ]);
-                } else {
-                    $category->tags()->attach($tag['id']);
-                }
-            }
-
-        }
         $message = __('admin.category-created');
         return response()->json(['message' => $message]);
     }
@@ -90,30 +70,8 @@ class CategoriesController extends Controller
         $this->rules['slug'] = 'required|string';
         $request->validate($this->rules);
 
-        $category = Category::findOrFail($id);
-        Category::whereId($id)->update([
-            'title' => $request->title,
-            'slug' => $request->slug,
-            'description' => $request->description
-        ]);
+        Categories::update($id);
 
-        if ($request->image) {
-            $category->files()->sync($request->image);
-        }
-
-        if ($request->tags) {
-            foreach ($request->tags as $tag) {
-                if (is_string($tag)) {
-                    $category->tags()->create([
-                        'title' => $tag,
-                        'type' => 'tag'
-                    ]);
-                } else {
-                    $category->tags()->sync($tag['id']);
-                }
-            }
-
-        }
         $message = __('admin.category-updated');
         return response()->json(['message' => $message]);
     }

@@ -32,17 +32,17 @@
         <b-field>
             <button class="button is-link" @click="openMedia">Add image</button>
         </b-field>
-        <section class="p-t-20 columns" v-if="selectedImage">
-            <div class="column is-one-quarter">
+        <section class="p-t-20 columns" v-if="selectedImage.length">
+            <div class="column is-one-quarter" v-for="image in images" :key="image.id">
                 <figure class="image is-square">
-                    <img :src="selectedImage.links.normal">
+                    <img :src="image.links.normal">
                 </figure>
             </div>
         </section>
         <b-modal :active.sync="isCardModalActive" scroll="keep" :width="'100%'" id="full">
             <div class="card">
                 <div class="card-content">
-                    <admin-media :access-token="accessToken" :site-url="siteUrl"
+                    <admin-media :site-url="siteUrl"
                         :form="true" v-model="selectedImage"
                         ></admin-media>
                 </div>
@@ -62,9 +62,11 @@
         data () {
             return {
                 form: {
-                    tags: []
+                    tags: [],
+                    images: []
                 },
-                selectedImage: null,
+                images: [],
+                selectedImage: [],
                 errors: {},
                 loading: false,
                 isSelectOnly: false,
@@ -77,16 +79,16 @@
                 this.form.slug = this.category.slug;
                 this.form.description = this.category.description;
                 this.form.tags = this.category.tags;
-                let image = window._.findWhere(this.category.files, {type: 'image'});
+                let images = window._.where(this.category.files, {type: 'image'});
 
-                this.form.image = image ? image : null;
-                this.selectedImage = image ? image : null;
+                this.selectedImage = images.length ? images : null;
             }
         },
         watch: {
-            selectedImage() {
-                this.form.image = this.selectedImage.id;
+            selectedImage(newImages, oldImages) {
+                this.form.images = window._.pluck(this.selectedImage, 'id');
                 this.isCardModalActive = false;
+                this.images = oldImages.concat(newImages);
             }
         },
         methods: {

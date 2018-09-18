@@ -22,6 +22,11 @@
                         <ul>
                             <li><a :class="checked.length <= 0 ? 'is-disabled' : ''" @click="deleteAll">Delete</a></li>
                             <li><a :class="checked.length <= 0 ? 'is-disabled' : ''">Generate Sizes</a></li>
+                            <li v-if="form">
+                                <a @click="useImages" :class="checked.length <= 0 ? 'is-disabled' : ''">
+                                    Use Selected Images
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -44,7 +49,6 @@
         methods: {
             selectImg(image) {
                 if (this.form) {
-                    this.$emit('input', image);
                     return;
                 }
                 this.viewImage = true;
@@ -56,10 +60,17 @@
                 });
             },
             deleteImage(id) {
-                window.axios.delete(`${this.siteUrl}/api/admin/admins/${id}`)
+                window.axios.delete(`${this.siteUrl}/api/admin/media/${id}`)
                 .then(res => {
                     console.log(res.data);
                 }).catch(err => console.log(err));
+            },
+            useImages() {
+                let images = window._.filter(this.images, image => {
+                    return this.checked.includes(image.id);
+                });
+                this.$emit('input', images);
+                return;
             }
         }
     }

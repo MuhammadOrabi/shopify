@@ -23,7 +23,7 @@ class CategoryObserver
      * @param  \App\Models\Category  $category
      * @return void
      */
-    public function updated(Category $category)
+    public function saved(Category $category)
     {
         //
     }
@@ -36,7 +36,7 @@ class CategoryObserver
      */
     public function deleted(Category $category)
     {
-        $category->images()->delete();
+        $category->files()->delete();
     }
 
     /**

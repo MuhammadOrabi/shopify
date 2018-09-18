@@ -17,7 +17,7 @@ class FilePolicy
      * @param  \App\Models\File  $file
      * @return mixed
      */
-    public function view(Admin $admin, File $file)
+    public function view(Admin $admin)
     {
         if ($admin->getRole('File', 'view')) {
             return true;
@@ -44,7 +44,7 @@ class FilePolicy
      * @param  \App\Models\File  $File
      * @return mixed
      */
-    public function update(Admin $admin, File $file)
+    public function update(Admin $admin)
     {
         if ($admin->getRole('File', 'update')) {
             return true;
@@ -58,7 +58,7 @@ class FilePolicy
      * @param  \App\Models\File  $File
      * @return mixed
      */
-    public function delete(Admin $admin, File $file)
+    public function delete(Admin $admin)
     {
         if ($admin->getRole('File', 'delete')) {
             return true;
@@ -72,7 +72,7 @@ class FilePolicy
      * @param  \App\Models\File  $File
      * @return mixed
      */
-    public function restore(Admin $admin, File $file)
+    public function restore(Admin $admin)
     {
         if ($admin->getRole('File', 'restore')) {
             return true;
@@ -86,7 +86,7 @@ class FilePolicy
      * @param  \App\Models\File  $File
      * @return mixed
      */
-    public function forceDelete(Admin $admin, File $file)
+    public function forceDelete(Admin $admin)
     {
         //
     }

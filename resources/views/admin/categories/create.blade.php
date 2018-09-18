@@ -13,7 +13,7 @@
                 </header>
                 <div class="card-content" >
                     <admin-categories-form
-                        tags="{{ json_encode($tags->toArray()) }}"
+                        :tags="{{ $tags }}"
                         site-url="{{ url('/') }}"
                         ></admin-categories-form>
                 </div>

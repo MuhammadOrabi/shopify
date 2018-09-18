@@ -17,7 +17,7 @@ Route::middleware('auth:api-admin')->prefix('admin')->group(function () {
     Route::apiResources([
         'admins' => 'API\Admin\AdminsController',
         'categories' => 'API\Admin\CategoriesController',
-        'media' => 'API\Admin\MediaController',
+    'media' => 'API\Admin\MediaController',
     ]);
 });
 
