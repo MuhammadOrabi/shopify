@@ -32,8 +32,9 @@
         <b-field>
             <button class="button is-link" @click="openMedia">Add image</button>
         </b-field>
-        <section class="p-t-20 columns" v-if="selectedImage.length">
-            <div class="column is-one-quarter" v-for="image in images" :key="image.id">
+        <section class="p-t-20 columns" v-if="images.length">
+            <div class="column is-one-quarter" v-for="(image, i) in images" :key="i">
+                <a class="delete" @click="removeImage(i)"></a>
                 <figure class="image is-square">
                     <img :src="image.links.normal">
                 </figure>
@@ -63,7 +64,8 @@
             return {
                 form: {
                     tags: [],
-                    images: []
+                    images: [],
+                    title: ''
                 },
                 images: [],
                 selectedImage: [],
@@ -81,14 +83,21 @@
                 this.form.tags = this.category.tags;
                 let images = window._.where(this.category.files, {type: 'image'});
 
-                this.selectedImage = images.length ? images : null;
+                this.images = images.length ? images : null;
             }
         },
         watch: {
-            selectedImage(newImages, oldImages) {
-                this.form.images = window._.pluck(this.selectedImage, 'id');
+            selectedImage() {
                 this.isCardModalActive = false;
-                this.images = oldImages.concat(newImages);
+                this.images = this.images.concat(this.selectedImage);
+            },
+            title() {
+                this.form.slug = this.title.replace(/\s+/g, '-').toLowerCase();;
+            }
+        },
+        computed: {
+            title() {
+                return this.form.title;
             }
         },
         methods: {
@@ -103,7 +112,11 @@
             openMedia() {
                 this.isCardModalActive = true;
             },
+            removeImage(i) {
+                this.images.splice(i, 1);
+            },
             save() {
+                this.form.images = window._.pluck(this.images, 'id');
                 this.loading = true;
                 this.errors = {};
                 if (this.category) {
@@ -116,8 +129,11 @@
                 window.axios.post(`${this.siteUrl}/api/admin/categories`, this.form)
                 .then(res => {
                     this.loading = false;
-                    this.form = {};
-                    this.selectedImage = null;
+                    this.form = {
+                        tags: [],
+                        images: []
+                    };
+                    this.images = [];
                     this.$toast.open({
                         message: res.data.message,
                         type: 'is-success'

@@ -3,8 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use App\Models\Tag;
 
-class Categories
+class CategoriesRepository
 {
 
     public static function __callStatic($method, $parameters)
@@ -28,7 +29,7 @@ class Categories
 
     private function images($category)
     {
-        $category->files()->detach();
+        $category->files()->whereType('image')->detach();
         foreach (request('images') as $image) {
             $category->files()->syncWithoutDetaching($image);
         }
@@ -42,11 +43,10 @@ class Categories
         });
 
         foreach ($tagString as $tag) {
-            $category->tags()->create([
-                'title' => $tag,
-                'type' => 'tag'
-            ]);
+            $tag = Tag::firstOrCreate(['title' => $tag, 'type' => 'tag']);
+            $category->tags()->syncWithoutDetaching($tag->id);
         }
+
         foreach ($tagArray as $tag) {
             $category->tags()->syncWithoutDetaching($tag['id']);
         }

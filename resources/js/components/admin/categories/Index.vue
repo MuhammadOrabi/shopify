@@ -42,9 +42,13 @@
                         @click="confirmDelete(props.row.id)">
                         <font-awesome-icon icon="trash" fixed-width size="lg"/>
                     </button>
-                    <button v-else title="Restore" class="button is-info is-inverted is-rounded"
+                    <button v-if="props.row.deleted_at" title="Restore" class="button is-info is-inverted is-rounded"
                         @click="confirmRestore(props.row.id)">
                         <font-awesome-icon icon="sync" fixed-width size="lg"/>
+                    </button>
+                    <button v-if="props.row.deleted_at" title="Force Delete" class="button is-danger is-inverted is-rounded"
+                        @click="confirmForceDelete(props.row.id)">
+                        <font-awesome-icon icon="minus-square" fixed-width size="lg"/>
                     </button>
                 </b-table-column>
             </template>
@@ -147,6 +151,28 @@
 
                     this.checkedRows = [];
                     this.$toast.open('Category restored!');
+                }).catch(err => console.log(err));
+            },
+            confirmForceDelete(id) {
+                this.$dialog.confirm({
+                    title: 'Force Deleting Category',
+                    message: 'Are you sure you want to <b>force delete</b> this Category? this action can not be done.',
+                    confirmText: 'Force Delete Category',
+                    type: 'is-danger',
+                    hasIcon: true,
+                    onConfirm: () => this.forceDeleteCategory(id)
+                });
+            },
+            forceDeleteCategory(id) {
+                window.axios.post(`${this.siteUrl}/api/admin/categories/force-delete/${id}`)
+                .then(res => {
+                    let category = window._.findWhere(this.data, {id: id});
+                    this.data = window._.reject(this.data, category => {
+                        return category.id == id;
+                    });
+
+                    this.checkedRows = [];
+                    this.$toast.open('Category deleted!');
                 }).catch(err => console.log(err));
             }
         }

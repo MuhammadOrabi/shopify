@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use \App\Repositories\Categories;
+use \App\Repositories\CategoriesRepository;
 
 class CategoriesController extends Controller
 {
@@ -40,7 +40,7 @@ class CategoriesController extends Controller
         $this->authorize('create', Category::class);
         $request->validate($this->rules);
 
-        $category = Categories::create();
+        $category = CategoriesRepository::create();
 
         $message = __('admin.category-created');
         return response()->json(['message' => $message]);
@@ -70,7 +70,7 @@ class CategoriesController extends Controller
         $this->rules['slug'] = 'required|string';
         $request->validate($this->rules);
 
-        Categories::update($id);
+        CategoriesRepository::update($id);
 
         $message = __('admin.category-updated');
         return response()->json(['message' => $message]);
@@ -82,10 +82,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($category)
+    public function destroy(Category $category)
     {
         $this->authorize('delete', Category::class);
-        Category::whereId($category)->delete();
+        $category->delete();
         return response()->json();
     }
 
@@ -93,7 +93,15 @@ class CategoriesController extends Controller
     public function restore($id)
     {
         $this->authorize('restore', Category::class);
-        Category::onlyTrashed()->where('id', $id)->restore();
+        Category::onlyTrashed()->whereId($id)->first()->restore();
+        return response()->json();
+    }
+
+
+    public function forceDelete($id)
+    {
+        $this->authorize('restore', Category::class);
+        Category::onlyTrashed()->whereId($id)->first()->forceDelete();
         return response()->json();
     }
 }

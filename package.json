@@ -17,6 +17,7 @@
         "buefy": "^0.6.7",
         "bulma": "^0.7.1",
         "bulma-extensions": "^2.2.0",
+        "cropperjs": "^1.4.1",
         "cross-env": "^5.1",
         "dotenv": "^6.0.0",
         "firebase": "^5.4.2",

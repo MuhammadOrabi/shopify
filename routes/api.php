@@ -14,6 +14,7 @@
 Route::middleware('auth:api-admin')->prefix('admin')->group(function () {
 
     Route::post('/categories/restore/{id}', 'API\Admin\CategoriesController@restore');
+    Route::post('/categories/force-delete/{id}', 'API\Admin\CategoriesController@forceDelete');
     Route::apiResources([
         'admins' => 'API\Admin\AdminsController',
         'categories' => 'API\Admin\CategoriesController',

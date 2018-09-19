@@ -36,7 +36,7 @@ class CategoryObserver
      */
     public function deleted(Category $category)
     {
-        $category->files()->delete();
+        //
     }
 
     /**
@@ -47,7 +47,7 @@ class CategoryObserver
      */
     public function restored(Category $category)
     {
-        $category->images()->onlyTrashed()->restore();
+        //
     }
 
     /**
@@ -58,6 +58,7 @@ class CategoryObserver
      */
     public function forceDeleted(Category $category)
     {
-        //
+        $category->files()->detach();
+        $category->tags()->detach();
     }
 }
