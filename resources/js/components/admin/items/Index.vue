@@ -12,7 +12,6 @@
                 <b-input placeholder="Search ...." type="search" icon="magnify" v-model="key"></b-input>
             </b-field>
         </b-field>
-
         <b-table :data="filtered ? filtered : []" :checked-rows.sync="checkedRows" checkable>
             <template slot-scope="props">
                 <b-table-column field="id" label="ID" width="40" sortable numeric>
@@ -21,6 +20,10 @@
 
                 <b-table-column field="title" label="Title" sortable>
                     {{ props.row.title }}
+                </b-table-column>
+
+                <b-table-column field="category" label="Category" sortable>
+                    {{ props.row.category.title }}
                 </b-table-column>
 
                 <b-table-column field="slug" label="Slug" sortable>
@@ -34,11 +37,11 @@
                 </b-table-column>
 
                 <b-table-column label="Options">
-                    <a :href="`${siteUrl}/admin/categories/${props.row.id}`"
+                    <a :href="`${siteUrl}/admin/items/${props.row.id}`"
                         title="View" class="button is-info is-inverted is-rounded">
                         <font-awesome-icon icon="eye" fixed-width size="lg"/>
                     </a>
-                    <a :href="`${siteUrl}/admin/categories/${props.row.id}/edit`"
+                    <a :href="`${siteUrl}/admin/items/${props.row.id}/edit`"
                         title="Edit" class="button is-primary is-inverted is-rounded">
                         <font-awesome-icon icon="edit" fixed-width size="lg"/>
                     </a>
@@ -78,7 +81,7 @@
 <script>
     import * as JsSearch from 'js-search';
     export default {
-        props: ['categories', 'siteUrl'],
+        props: ['items', 'siteUrl'],
         data() {
             return {
                 checkedRows: [],
@@ -120,77 +123,77 @@
             }
         },
         created() {
-            this.data = this.categories;
+            this.data = this.items;
         },
         methods: {
             confirmDelete(id) {
                 this.$dialog.confirm({
-                    title: 'Deleting Category',
-                    message: 'Are you sure you want to <b>delete</b> this Category?',
-                    confirmText: 'Delete Category',
+                    title: 'Deleting Item',
+                    message: 'Are you sure you want to <b>delete</b> this Item?',
+                    confirmText: 'Delete Item',
                     type: 'is-danger',
                     hasIcon: true,
-                    onConfirm: () => this.deleteCategory(id)
+                    onConfirm: () => this.deleteItem(id)
                 });
             },
-            deleteCategory(id) {
-                window.axios.delete(`${this.siteUrl}/api/admin/categories/${id}`)
+            deleteItem(id) {
+                window.axios.delete(`${this.siteUrl}/api/admin/items/${id}`)
                 .then(res => {
-                    let category = window._.findWhere(this.data, {id: id});
-                    this.data = window._.reject(this.data, category => {
-                        return category.id == id;
+                    let item = window._.findWhere(this.data, {id: id});
+                    this.data = window._.reject(this.data, item => {
+                        return item.id == id;
                     });
-                    category.deleted_at = new Date();
-                    this.data.push(category);
+                    item.deleted_at = new Date();
+                    this.data.push(item);
 
                     this.checkedRows = [];
-                    this.$toast.open('Category deleted!');
+                    this.$toast.open('item deleted!');
                 }).catch(err => console.log(err));
             },
             confirmRestore(id) {
                 this.$dialog.confirm({
-                    title: 'Restoring Category',
-                    message: 'Are you sure you want to <b>restore</b> this Category?',
-                    confirmText: 'Restore Category',
+                    title: 'Restoring item',
+                    message: 'Are you sure you want to <b>restore</b> this item?',
+                    confirmText: 'Restore item',
                     type: 'is-warning',
                     hasIcon: true,
-                    onConfirm: () => this.restoreCategory(id)
+                    onConfirm: () => this.restoreItem(id)
                 });
             },
-            restoreCategory(id) {
-                window.axios.post(`${this.siteUrl}/api/admin/categories/restore/${id}`, {})
+            restoreItem(id) {
+                window.axios.post(`${this.siteUrl}/api/admin/items/restore/${id}`, {})
                 .then(res => {
-                    let category = window._.findWhere(this.data, {id: id});
-                    this.data = window._.reject(this.data, category => {
-                        return category.id == id;
+                    let item = window._.findWhere(this.data, {id: id});
+                    this.data = window._.reject(this.data, item => {
+                        return item.id == id;
                     });
-                    category.deleted_at = null;
-                    this.data.push(category);
+                    item.deleted_at = null;
+                    this.data.push(item);
 
                     this.checkedRows = [];
-                    this.$toast.open('Category restored!');
+                    this.$toast.open('item restored!');
                 }).catch(err => console.log(err));
             },
             confirmForceDelete(id) {
                 this.$dialog.confirm({
-                    title: 'Force Deleting Category',
-                    message: 'Are you sure you want to <b>force delete</b> this Category? this action can not be done.',
-                    confirmText: 'Force Delete Category',
+                    title: 'Force Deleting item',
+                    message: 'Are you sure you want to <b>force delete</b> this item? this action can not be done.',
+                    confirmText: 'Force Delete item',
                     type: 'is-danger',
                     hasIcon: true,
-                    onConfirm: () => this.forceDeleteCategory(id)
+                    onConfirm: () => this.forceDeleteItem(id)
                 });
             },
-            forceDeleteCategory(id) {
-                window.axios.post(`${this.siteUrl}/api/admin/categories/force-delete/${id}`)
+            forceDeleteItem(id) {
+                window.axios.post(`${this.siteUrl}/api/admin/items/force-delete/${id}`)
                 .then(res => {
-                    let category = window._.findWhere(this.data, {id: id});
-                    this.data = window._.reject(this.data, category => {
-                        return category.id == id;
+                    let item = window._.findWhere(this.data, {id: id});
+                    this.data = window._.reject(this.data, item => {
+                        return item.id == id;
                     });
 
                     this.checkedRows = [];
-                    this.$toast.open('Category deleted!');
+                    this.$toast.open('item deleted!');
                 }).catch(err => console.log(err));
             }
         }

@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\API\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin;
-use App\Models\Category;
 use Illuminate\Http\Request;
-use \App\Repositories\CategoriesRepository;
+use App\Http\Controllers\Controller;
+use App\Repositories\ItemsRepository;
+use App\Models\Item;
 
-class CategoriesController extends Controller
+class ItemsController extends Controller
 {
-
     public $rules = [
         'title' => 'required|string|max:255',
-        'slug' => 'required|string|unique:categories',
+        'category' => 'required|exists:categories,id',
+        'slug' => 'required|string|unique:items',
         'description' => 'required|string',
         'tags' => 'array',
         'images' => 'array',
@@ -37,12 +36,12 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Category::class);
+        $this->authorize('create', Item::class);
         $request->validate($this->rules);
 
-        $category = CategoriesRepository::create();
+        ItemsRepository::create();
 
-        $message = __('admin.created', ['module' => 'category']);
+        $message = __('admin.created', ['module' => 'Item']);
         return response()->json(['message' => $message]);
     }
 
@@ -66,13 +65,13 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->authorize('update', Category::class);
+        $this->authorize('update', Item::class);
         $this->rules['slug'] = 'required|string';
         $request->validate($this->rules);
 
-        CategoriesRepository::update($id);
+        ItemsRepository::update($id);
 
-        $message = __('admin.updated', ['module' => 'category']);
+        $message = __('admin.updated', ['module' => 'Item']);
         return response()->json(['message' => $message]);
     }
 
@@ -82,26 +81,8 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        $this->authorize('delete', Category::class);
-        $category->delete();
-        return response()->json();
-    }
-
-
-    public function restore($id)
-    {
-        $this->authorize('restore', Category::class);
-        Category::onlyTrashed()->whereId($id)->first()->restore();
-        return response()->json();
-    }
-
-
-    public function forceDelete($id)
-    {
-        $this->authorize('force-delete', Category::class);
-        Category::onlyTrashed()->whereId($id)->first()->forceDelete();
-        return response()->json();
+        //
     }
 }

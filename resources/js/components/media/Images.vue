@@ -49,6 +49,8 @@
         methods: {
             selectImg(image) {
                 if (this.form) {
+                    this.checked = this.checked.includes(image.id) ?
+                                    _.without(this.checked, image.id) : _.union(this.checked, [image.id]);
                     return;
                 }
                 this.viewImage = true;

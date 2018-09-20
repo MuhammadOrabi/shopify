@@ -15,6 +15,8 @@ Route::middleware('auth:web-admin')->group(function () {
 
     Route::resource('categories', 'Admin\CategoriesController');
 
+    Route::resource('items', 'Admin\ItemsController');
+
     Route::resource('media', 'Admin\MediaController');
 });
 

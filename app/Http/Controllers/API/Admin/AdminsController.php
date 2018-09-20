@@ -40,7 +40,7 @@ class AdminsController extends Controller
             'password' => Hash::make($request->password)
         ]);
         $admin->roles()->sync($request->role);
-        $message = __('admin.created');
+        $message = __('admin.created', ['module' => 'admin']);
         return response()->json(['message' => $message]);
     }
 
@@ -84,7 +84,7 @@ class AdminsController extends Controller
         }
 
         $admin->roles()->sync($request->role);
-        $message = __('admin.updated');
+        $message = __('admin.updated', ['module' => 'admin']);
         return response()->json(['message' => $message]);
     }
 

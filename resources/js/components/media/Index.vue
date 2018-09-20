@@ -3,14 +3,13 @@
         <b-tab-item label="Upload Files" icon="upload">
             <admin-media-upload ref="upload" :site-url="siteUrl" v-on:uploaded="uploaded"></admin-media-upload>
         </b-tab-item>
-        <b-tab-item label="Editor" icon="edit">
-            <admin-media-editor></admin-media-editor>
-        </b-tab-item>
         <b-tab-item label="Pictures" icon="google-photos">
             <admin-media-images ref="images" :images="images"
             :form="form" v-model="selectedImage"  :site-url="siteUrl"></admin-media-images>
         </b-tab-item>
         <b-tab-item label="Videos" icon="video"></b-tab-item>
+        <b-tab-item label="Editor" icon="edit">
+        </b-tab-item>
     </b-tabs>
 </template>
 
@@ -23,15 +22,7 @@
                 activeTab: 1,
                 files: [],
                 selectedImage: null,
-                editorData: {
-                    cropped: false,
-                    cropping: false,
-                    loaded: false,
-                    name: '',
-                    previousUrl: '',
-                    type: '',
-                    url: '',
-                }
+
             };
         },
         computed: {

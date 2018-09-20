@@ -9,7 +9,7 @@
     </a>
     <hr>
     <admin-categories-index
-        categories="{{ json_encode($categories->toArray()) }}"
+        :categories="{{ $categories }}"
         site-url="{{ url('/') }}"
         ></admin-categories-index>
 @endsection

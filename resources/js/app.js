@@ -32,12 +32,12 @@ Vue.component('admin-admins-form', require('./components/admin/admins/Form.vue')
 Vue.component('admin-categories-index', require('./components/admin/categories/Index.vue'));
 Vue.component('admin-categories-form', require('./components/admin/categories/Form.vue'));
 
+Vue.component('admin-items-index', require('./components/admin/items/Index.vue'));
+Vue.component('admin-items-form', require('./components/admin/items/Form.vue'));
+
 Vue.component('admin-media', require('./components/media/Index.vue'));
 Vue.component('admin-media-upload', require('./components/media/Upload.vue'));
 Vue.component('admin-media-images', require('./components/media/Images.vue'));
-
-Vue.component('admin-media-editor', require('./components/media/Editor.vue'));
-
 
 const app = new Vue({
     el: '#app'

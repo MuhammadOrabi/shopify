@@ -24,6 +24,7 @@
         "font-awesome": "^4.7.0",
         "fs": "0.0.1-security",
         "jquery": "^3.3.1",
+        "js-search": "^1.4.2",
         "laravel-mix": "^2.1",
         "laravel-mix-purgecss": "^2.0",
         "laravel-mix-tailwind": "^0.1.0",

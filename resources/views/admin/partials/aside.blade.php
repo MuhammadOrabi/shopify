@@ -24,6 +24,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ url('/admin/items') }}" class="{{ Nav::hasSegment('items', 2) }}">
+                    <span class="icon" ><font-awesome-icon class="p-t-10" size="xs" icon="sticky-note" fixed-width/></span>
+                    Items
+                </a>
+            </li>
+            <li>
                 <a href="{{ url('/admin/media') }}" class="{{ Nav::hasSegment('media', 2) }}">
                     <span class="icon" ><font-awesome-icon class="p-t-10" size="xs" icon="images" fixed-width/></span>
                     Media
