@@ -35,10 +35,5 @@ deploy_production:
     - gem install dpl
     - dpl --provider=heroku --app=shopify-orabi --api-key=$HEROKU_PRODUCTION_API_KEY
 
-    # - ~/.composer/vendor/bin/envoy run deploy
-  environment:
-    name: production
-    url: http://192.168.1.1
-  # when: manual
   only:
     - master
