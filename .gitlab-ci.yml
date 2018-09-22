@@ -30,8 +30,7 @@ deploy_production:
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - git remote add heroku git.heroku.com/shopify-orabi.git
-    - git push heroku master
+    - git push https://heroku:5b271f58-d3a9-44f3-8202-a49d5a8a8330@git.heroku.com/shopify-orabi.git HEAD
     # - ~/.composer/vendor/bin/envoy run deploy
   environment:
     name: production
