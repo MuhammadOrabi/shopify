@@ -15,7 +15,8 @@
 
 @task('push_to_heroku')
     git push {{ $heroku }} HEAD
-    heroku login
+    git remote add heroku git.heroku.com/shopify-orabi.git
+    git push heroku master
 @endtask
 
 
