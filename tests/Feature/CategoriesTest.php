@@ -24,10 +24,8 @@ class CategoriesTest extends TestCase
     {
         $admin = Admin::find(1);
 
-        $category = factory('App\Models\Category')->create();
-
         $response = $this->actingAs($admin, 'web-admin')->get('/admin/categories');
 
-        $response->assertSee($category->title);
+        $response->assertOk();
     }
 }
