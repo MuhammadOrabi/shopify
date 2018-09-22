@@ -65,7 +65,7 @@
 <script>
     export default {
         name: 'Form',
-        props: ['tags', 'item', 'siteUrl', 'categories'],
+        props: ['tags', 'item', 'siteUrl', 'categories', 'category'],
         data () {
             return {
                 form: {
@@ -82,6 +82,7 @@
             }
         },
         created() {
+            this.form.category = this.category ? this.category : 0;
             if (this.item) {
                 this.form.title = this.item.title;
                 this.form.slug = this.item.slug;
@@ -89,7 +90,6 @@
                 this.form.tags = this.item.tags;
                 this.form.category = this.item.category_id;
                 let images = window._.where(this.item.files, {type: 'image'});
-
                 this.images = images.length ? images : null;
             }
         },

@@ -33,7 +33,8 @@ class ItemsController extends Controller
         $this->authorize('view', Item::class);
         $tags = Tag::latest()->get();
         $categories = Category::latest()->get();
-        return view('admin.items.create', compact('tags', 'categories'));
+        $category = Category::find(request('category_id'));
+        return view('admin.items.create', compact('tags', 'categories', 'category'));
     }
 
     /**
