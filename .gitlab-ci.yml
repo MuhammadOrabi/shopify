@@ -1,4 +1,4 @@
-image: registry.gitlab.com/MuhammadOrabi/shopify:latest
+image: registry.gitlab.com/muhammadorabi/shopify:latest
 
 services:
   - mysql:5.7
