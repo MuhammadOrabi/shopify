@@ -6,10 +6,18 @@
     $app_dir = '/var/www/app';
     $release = date('YmdHis');
     $new_release_dir = $releases_dir .'/'. $release;
+    $heroku = 'https://heroku:5b271f58-d3a9-44f3-8202-a49d5a8a8330@git.heroku.com/shopify-orabi.git';
 @endsetup
 
 @story('deploy')
+    push_to_heroku
 @endstory
+
+@task('push_to_heroku')
+    git push {{ $heroku }} HEAD
+    heroku login
+@endtask
+
 
 @task('clone_repository')
     echo 'Cloning repository'
