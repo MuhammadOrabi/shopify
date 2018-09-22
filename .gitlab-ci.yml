@@ -30,7 +30,11 @@ deploy_production:
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-    - git push https://heroku:5b271f58-d3a9-44f3-8202-a49d5a8a8330@git.heroku.com/shopify-orabi.git HEAD
+    - apt-get update -qy
+    - apt-get install -y ruby-dev
+    - gem install dpl
+    - dpl --provider=heroku --app=shopify-orabi --api-key=$HEROKU_PRODUCTION_API_KEY
+
     # - ~/.composer/vendor/bin/envoy run deploy
   environment:
     name: production
