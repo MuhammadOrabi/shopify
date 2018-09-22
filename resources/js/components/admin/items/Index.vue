@@ -12,22 +12,15 @@
                 <b-input placeholder="Search ...." type="search" icon="magnify" v-model="key"></b-input>
             </b-field>
         </b-field>
-        <b-table :data="filtered ? filtered : []" :checked-rows.sync="checkedRows" checkable>
+        <b-table :data="filtered ? filtered : []" backend-pagination :loading="loading" :total="total"
+             :checked-rows.sync="checkedRows" paginated :per-page="perPage" @page-change="onPageChange" checkable>
             <template slot-scope="props">
                 <b-table-column field="id" label="ID" width="40" sortable numeric>
                     {{ props.row.id }}
                 </b-table-column>
 
                 <b-table-column field="title" label="Title" sortable>
-                    {{ props.row.title }}
-                </b-table-column>
-
-                <b-table-column field="category" label="Category" sortable>
-                    {{ props.row.category.title }}
-                </b-table-column>
-
-                <b-table-column field="slug" label="Slug" sortable>
-                    {{ props.row.slug }}
+                    {{ props.row.title.length > 20 ? props.row.title.substring(0, 20) + '.....' : props.row.title}}
                 </b-table-column>
 
                 <b-table-column field="created_at" label="Created Date" sortable centered>
@@ -81,13 +74,17 @@
 <script>
     import * as JsSearch from 'js-search';
     export default {
-        props: ['items', 'siteUrl'],
+        props: ['siteUrl', 'category_id'],
         data() {
             return {
                 checkedRows: [],
                 data: [],
                 filter: '1',
-                key: ''
+                key: '',
+                loading: false,
+                total: 0,
+                page: 1,
+                perPage: 5
             }
         },
         computed: {
@@ -123,9 +120,25 @@
             }
         },
         created() {
-            this.data = this.items;
+            this.loadAsyncData();
         },
         methods: {
+            loadAsyncData() {
+                this.loading = true;
+                window.axios.get(`${this.siteUrl}/api/admin/items?page=${this.page}&category_id=${this.category_id}`)
+                .then(({ data }) => {
+                    let items = data.items;
+                    this.data = items.data;
+                    this.total = items.total;
+                    this.loading = false;
+                }).catch(err => {
+                    console.log(err);
+                });
+            },
+            onPageChange(page) {
+                this.page = page;
+                this.loadAsyncData()
+            },
             confirmDelete(id) {
                 this.$dialog.confirm({
                     title: 'Deleting Item',

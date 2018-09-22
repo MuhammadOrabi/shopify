@@ -13,6 +13,14 @@ class CategoriesRepository
         return (new static)->$method(...$parameters);
     }
 
+    private function get()
+    {
+        $categories = Category::withTrashed()
+                        ->with('tags', 'files', 'items')
+                        ->orderBy('id', 'desc');
+        return $this->filter($categories);
+    }
+
     private function create()
     {
         $category = Category::create([
@@ -25,6 +33,15 @@ class CategoriesRepository
         $this->tags($category);
 
         return $category;
+    }
+
+    private function filter($categories)
+    {
+        if (request()->has('category_id')) {
+            $categories->where('category_id', request('category_id'));
+        }
+
+        return $categories->paginate(config('options.paginate'));
     }
 
     private function images($category)

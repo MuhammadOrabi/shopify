@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Tag;
 use App\Models\Category;
+use App\Repositories\ItemsRepository;
 
 class ItemsController extends Controller
 {
@@ -18,8 +19,8 @@ class ItemsController extends Controller
     public function index()
     {
         $this->authorize('view', Item::class);
-        $items = Item::withTrashed()->with('tags', 'files', 'category')->latest()->get();
-        return view('admin.items.index', compact('items'));
+        $category = Category::find(request('category_id'));
+        return view('admin.items.index', compact('category'));
     }
 
     /**

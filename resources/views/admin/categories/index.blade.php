@@ -9,7 +9,6 @@
     </a>
     <hr>
     <admin-categories-index
-        :categories="{{ $categories }}"
         site-url="{{ url('/') }}"
         ></admin-categories-index>
 @endsection

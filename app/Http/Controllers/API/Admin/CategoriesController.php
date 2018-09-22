@@ -26,7 +26,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('view', Category::class);
+        $categories = CategoriesRepository::get();
+        return response()->json(compact('categories'));
     }
 
     /**

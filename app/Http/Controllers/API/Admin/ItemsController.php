@@ -25,7 +25,9 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        //
+        $this->authorize('view', Item::class);
+        $items = ItemsRepository::get();
+        return response()->json(compact('items'));
     }
 
     /**

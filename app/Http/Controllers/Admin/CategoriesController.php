@@ -18,8 +18,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $this->authorize('view', Category::class);
-        $categories = Category::withTrashed()->latest()->get();
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.index');
     }
 
     /**
