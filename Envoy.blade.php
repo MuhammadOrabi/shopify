@@ -1,4 +1,4 @@
-@servers(['web' => 'deployer@192.168.1.1'])
+@servers(['localhost' => '127.0.0.1'])
 
 @setup
     $repository = 'git@gitlab.example.com:<USERNAME>/laravel-sample.git';
